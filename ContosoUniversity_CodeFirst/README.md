@@ -73,7 +73,7 @@ connectionString to use LocalDB mdf file store in App_Data/ folder
 
 ```  
 	<connectionStrings>
-		<add name="SchoolContext" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ContosoUniversity1;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\ContosoUniversity1.mdf" providerName="System.Data.SqlClient"/>
+		<add name="SchoolContext" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ContosoUniversityCF;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\ContosoUniversityCF.mdf" providerName="System.Data.SqlClient"/>
 	</connectionStrings>
 ```  
 
