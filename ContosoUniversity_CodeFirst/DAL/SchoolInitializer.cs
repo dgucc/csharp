@@ -46,6 +46,7 @@ namespace ContosoUniversity.DAL {
                 new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
                 new Enrollment{StudentID=6,CourseID=1045},
                 new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
+                new Enrollment{StudentID=10,CourseID=3141}
             };
             enrollments.ForEach(s => context.Enrollments.Add(s));
             context.SaveChanges();

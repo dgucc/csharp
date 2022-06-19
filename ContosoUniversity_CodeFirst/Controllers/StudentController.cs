@@ -40,7 +40,7 @@ namespace ContosoUniversity.Views {
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,LastName,FirstMidName,EnrollmentDate")] Student student) {
+        public ActionResult Create([Bind(Include = "ID,LastName,FirstMidName,EnrollmentDate,EmailAddress")] Student student) {
             try {
                 if (ModelState.IsValid) {
                     db.Students.Add(student);
@@ -71,7 +71,7 @@ namespace ContosoUniversity.Views {
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,LastName,FirstMidName,EnrollmentDate")] Student student) {
+        public ActionResult Edit([Bind(Include = "ID,LastName,FirstMidName,EnrollmentDate,EmailAddress")] Student student) {
             if (ModelState.IsValid) {
                 db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
