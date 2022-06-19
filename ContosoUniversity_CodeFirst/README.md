@@ -96,6 +96,12 @@ For SSL Port cf. *.csproj.user : `<IISExpressSSLPort>`
 
 Idem for Courses, Enrollments, Instructors, Departments  
 
+## [Implementing basic CRUD Functionality](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/implementing-basic-crud-functionality-with-the-entity-framework-in-asp-net-mvc-application)
+
+Enhanced Views\Student\Details.cshtml by adding related Enrollments table    
+
+Press CTRL+F5 > Visualize [Student Details](https://localhost:44342/Student/Details/1)  
+
 ---
 
 ## Tips
