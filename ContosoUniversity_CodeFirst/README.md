@@ -89,7 +89,10 @@ Add Controller > Select
 Controllers\StudentController.cs  
 Student\Index.cshtml  
 
-Press CTRL+F5 : https://localhost:44371/ > Click on "Students" in the menu  
+Press CTRL+F5 :  
+https://localhost:44371/ > Click on "Students" in the menu  
+
+For SSL Port cf. *.csproj.user : `<IISExpressSSLPort>`  
 
 ---
 
