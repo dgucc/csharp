@@ -72,9 +72,9 @@ connectionString to use LocalDB mdf file store in App_Data/ folder
 "AttachDBFilename=|DataDirectory|\ContosoUniversity1.mdf"  
 
 ```  
-	<connectionStrings>
-		<add name="SchoolContext" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ContosoUniversityCF;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\ContosoUniversityCF.mdf" providerName="System.Data.SqlClient"/>
-	</connectionStrings>
+<connectionStrings>
+	<add name="SchoolContext" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ContosoUniversityCF;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\ContosoUniversityCF.mdf" providerName="System.Data.SqlClient"/>
+</connectionStrings>
 ```  
 
 ### Create Scaffolded Controller and View
@@ -100,7 +100,7 @@ Idem for Courses, Enrollments, Instructors, Departments
 
 ## Tips
 
-Cannot drop database "ContosoUniversity1" because it is currently in use.  
+Cannot drop database "ContosoUniversityCF" because it is currently in use.  
 Launch Resource Monitor : "resmon"  
-    Tab CPU > Search Handles : 'ContosoUniversity1.mdf'  
-    kill "sqlserver"  
+    Tab CPU > Search Handles : 'ContosoUniversityCF.mdf'  
+    kill "sqlserver.exe"  
