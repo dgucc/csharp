@@ -67,7 +67,7 @@ Configure EntityFramework to use the initializer class  - Web.config :
 </entityFramework>
 ```  
 
-### Use LocalDB - SQL Server Express
+### Configure LocalDB - SQL Server Express
 connectionString to use LocalDB mdf file store in App_Data/ folder  
 "AttachDBFilename=|DataDirectory|\ContosoUniversity1.mdf"  
 
@@ -77,7 +77,7 @@ connectionString to use LocalDB mdf file store in App_Data/ folder
 	</connectionStrings>
 ```  
 
-### Create Controller and View
+### Create Scaffolded Controller and View
 Right-click on Controllers folder > Add > New Scaffolded Item  
 Select "MVC 5 Controller with views, using Entity Framework" > Add
 Add Controller > Select 
@@ -90,6 +90,8 @@ Controllers\StudentController.cs
 Student\Index.cshtml  
 
 Press CTRL+F5 : https://localhost:44371/ > Click on "Students" in the menu  
+
+Idem for Courses, Enrollments, Instructors, Departments  
 
 ---
 
