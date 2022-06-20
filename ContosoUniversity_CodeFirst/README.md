@@ -69,7 +69,7 @@ Configure EntityFramework to use the initializer class  - Web.config :
 
 ### Configure LocalDB - SQL Server Express
 connectionString to use LocalDB mdf file store in App_Data/ folder  
-"AttachDBFilename=|DataDirectory|\ContosoUniversity1.mdf"  
+"AttachDBFilename=|DataDirectory|\ContosoUniversityCF.mdf"  
 
 ```  
 <connectionStrings>
