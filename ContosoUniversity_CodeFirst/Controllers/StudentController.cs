@@ -110,8 +110,10 @@ namespace ContosoUniversity.Views {
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id) {
             try {
-                Student student = db.Students.Find(id);
-                db.Students.Remove(student);
+                //Student student = db.Students.Find(id);
+                //db.Students.Remove(student);
+                Student studentToDelete = new Student() { ID = id };
+                db.Entry(studentToDelete).State = EntityState.Deleted;
                 db.SaveChanges();
             } catch (DataException /*dex */) {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
