@@ -1,4 +1,4 @@
-# RazorPagesMovies
+# RazorPagesMovies - Tutorial
 
 [Overview of ASP.NET Core MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-6.0)
 
