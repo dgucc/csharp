@@ -1,4 +1,5 @@
-# Blazor Upload Files 
+# ASP.NET Core Web API 
+# Upload pdf => Return 1st page as jpg
 
 References :  
 - [Uploading Files in Blazor Web Assembly & ASP.NET Core Web API [Blazor Topics] | AK Academy](https://www.youtube.com/watch?v=i6C6ospRrYI&list=PLFJQnCcZXWjsHh_-fdpNmZJn1LhNm7ck0&index=3)  ([Github](https://github.com/aksoftware98/blazorfiles))
