@@ -52,6 +52,16 @@ $ curl -k -X 'GET' 'https://localhost:7184/WeatherForecast' -H 'accept: text/pla
 
 Create folder **wwwroot/Images**  
 
+BlazorFile.Api.csproj :  
+
+```xml
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Docnet.Core" Version="2.3.1" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+	</ItemGroup>
+```
+
 ### Upload Image [POST api/images]  
 
 Controllers/ImagesController.cs :  

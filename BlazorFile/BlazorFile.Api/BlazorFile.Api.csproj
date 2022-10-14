@@ -13,8 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="wwwroot\Images\" />
-		<Folder Include="wwwroot\Pdfs\" />
+	  <Folder Include="wwwroot\Images\" />
 	</ItemGroup>
 
 </Project>
