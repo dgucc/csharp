@@ -8,13 +8,12 @@ using System.Runtime.InteropServices;
 using Docnet.Core.Converters;
 using Docnet.Core.Models;
 
-namespace BlazorFile.Api {
-    public class PdfUtils {
+namespace BlazorFile.Api.Services {
+    public class DocnetService {
 
         private readonly ExampleFixture _fixture = new ExampleFixture();
 
-
-        public static string Pdf2Jpg(byte[] bytes, float w, float h) {
+        public static byte[] Pdf2Jpg(byte[] bytes, float w, float h) {
             using var docReader = new ExampleFixture().DocNet.GetDocReader(
                             bytes,
                             new PageDimensions(1080, 1920));
@@ -35,11 +34,7 @@ namespace BlazorFile.Api {
 
             bmp.Save(stream, ImageFormat.Jpeg);
 
-            var resultName = $"{Guid.NewGuid()}.jpg";
-
-            File.WriteAllBytes(Environment.CurrentDirectory + @"/wwwroot/Images/" +  resultName, stream.ToArray());
-
-            return @"Images/" + resultName;
+            return stream.ToArray();
 
         }
 

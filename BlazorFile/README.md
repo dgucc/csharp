@@ -1,13 +1,14 @@
 # Blazor Upload Files 
 
-[Uploading Files in Blazor Web Assembly & ASP.NET Core Web API [Blazor Topics] | AK Academy](https://www.youtube.com/watch?v=i6C6ospRrYI&list=PLFJQnCcZXWjsHh_-fdpNmZJn1LhNm7ck0&index=3)  
-Code in [Github](https://github.com/aksoftware98/blazorfiles)
+References :  
+- [Uploading Files in Blazor Web Assembly & ASP.NET Core Web API [Blazor Topics] | AK Academy](https://www.youtube.com/watch?v=i6C6ospRrYI&list=PLFJQnCcZXWjsHh_-fdpNmZJn1LhNm7ck0&index=3)  ([Github](https://github.com/aksoftware98/blazorfiles))
+- [DocNET.Core To convert pdf to jpg](https://github.com/GowenGit/docnet)
+
 
 ## Create project BlazorFiles.Api
 
-Create **ASP.NET Core Web API** project  
-
-Folder Controllers : Add **API Controller - Empty**  
+- Create **ASP.NET Core Web API** project  
+- Folder Controllers : Add **API Controller - Empty**  
 
 
 ## Define Cors Policy + Enable Static Files
@@ -29,11 +30,8 @@ app.UseCors("CorsPolicy");
 
 Solution : Add > New Project... > **Blazor WebAssembly App**  
 
-## Set Startup Projects
 
-Solution : Set Startup Projects... > Multiple Startup Projects > "Start" for all projects  
-
-## Start <F5> and Sanity Test
+## Start <F5> to check it's a working basis
 ```bash
 $ curl -k -X 'GET' 'https://localhost:7184/WeatherForecast' -H 'accept: text/plain' | jq
 [
@@ -43,74 +41,51 @@ $ curl -k -X 'GET' 'https://localhost:7184/WeatherForecast' -H 'accept: text/pla
     "temperatureF": 48,
     "summary": "Scorching"
   },
-  {
-    "date": "2022-10-16T09:14:57.2193038+02:00",
-    "temperatureC": 38,
-    "temperatureF": 100,
-    "summary": "Mild"
-  },
-  {
-    "date": "2022-10-17T09:14:57.2193042+02:00",
-    "temperatureC": 22,
-    "temperatureF": 71,
-    "summary": "Cool"
-  },
-  {
-    "date": "2022-10-18T09:14:57.2193045+02:00",
-    "temperatureC": -11,
-    "temperatureF": 13,
-    "summary": "Balmy"
-  },
-  {
-    "date": "2022-10-19T09:14:57.2193048+02:00",
-    "temperatureC": 41,
-    "temperatureF": 105,
-    "summary": "Mild"
-  }
+  ...
 ]
 
 ```
 
 ---
 
-## Implement API BlazorFile.Api
+## Implement API to upload images or pdf2jpg (BlazorFile.Api)
 
-Create folder **wwwwroot/Images**  
-Create folder **wwwwroot/Pdfs**  
+Create folder **wwwroot/Images**  
 
-### Controllers/PdfsController.cs 
+### Upload Image [POST api/images]  
 
-#### POST api/pdfs
-- Store uploaded pdf in wwwroot/Pdfs   
-- and return the path of the pdf
+Controllers/ImagesController.cs :  
 ```csharp
-[HttpPost]
-public async Task<IActionResult> Post([FromForm] IFormFile pdf) 
+    [HttpPost]
+    public async Task<IActionResult> Post([FromForm] IFormFile image) 
 ```
+- Store uploaded Image in wwwroot/Images   
+- and return the path of the image
 
-Test :   
 ```bash
-$ curl -k --location --request POST 'https://localhost:7184/api/pdfs' --form 'pdf=@"example.pdf"'
-Pdfs/047542dc-9341-4632-b594-e76a2f61fccc.pdf
+$ curl -k --location --request POST 'https://localhost:7184/api/images' --form 'pdf=@"example.png"'
+Images/047542dc-9341-4632-b594-e76a2f61fccc.png
 ```
-https://localhost:7184/Pdfs/047542dc-9341-4632-b594-e76a2f61fccc.pdf
+    https://localhost:7184/Images/047542dc-9341-4632-b594-e76a2f61fccc.pdf
 
 
-#### POST api/pdfs/pdf2jpg
-- Store uploaded pdf in wwwroot/Pdfs 
-- Convert 1 page of pdf into jpg 
-- Return path of the jpg
+### Upload pdf => Return 1st page as jpg [POST api/pdfs/pdf2jpg]
+
+Controllers/PdfsController.cs :  
 ```csharp
-[HttpPost("pdf2jpg")]
-public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf)
+    [HttpPost("pdf2jpg")]
+    public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int height)
 ```
+    - Get uploaded pdf 
+    - Convert 1st page of the pdf into jpg (with specified resolution width, height)
+    - Return the resulting jpg
 
-Test :    
 ```bash
-curl -k --location --request POST 'https://localhost:7184/api/pdfs/pdf2jpg' --form 'pdf=@"example.pdf"'
-Images/f41f6a61-6bcd-4374-90bf-f6fd4e5bdd82.jpg
+$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg' --form 'pdf=@"example.pdf"' --form width=200 --form height=120 --form height=120 -O 
+
+# curl :
+#  -k | --insecure :            accept https and ignore certificate errors
+#  -J | --remote-header-name :  Write output to a local file using name specified in Content-Disposition HTTP response header
+#  -O :                         Write output to a local file named as the remote file
+
 ```
-
-https://localhost:7184/Images/f41f6a61-6bcd-4374-90bf-f6fd4e5bdd82.jpg
-
-
