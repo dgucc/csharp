@@ -6,6 +6,7 @@
 BlazorFile.Api/wwwroot/Images/*
 BlazorFile.Api/wwwroot/Pdfs/*
 
+Test/*
 
 # User-specific files
 *.rsuser

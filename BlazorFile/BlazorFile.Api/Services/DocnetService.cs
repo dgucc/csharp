@@ -13,12 +13,12 @@ namespace BlazorFile.Api.Services {
 
         private readonly ExampleFixture _fixture = new ExampleFixture();
 
-        public static byte[] Pdf2Jpg(byte[] bytes, float w, float h) {
+        public static byte[] Pdf2Jpg(byte[] bytes, float w, float h, int pageNumber=1) {
             using var docReader = new ExampleFixture().DocNet.GetDocReader(
                             bytes,
                             new PageDimensions(1080, 1920));
 
-            using var pageReader = docReader.GetPageReader(0);
+            using var pageReader = docReader.GetPageReader(pageNumber-1);
 
             var rawBytes = pageReader.GetImage();
             var width = pageReader.GetPageWidth();

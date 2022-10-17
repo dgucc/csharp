@@ -85,14 +85,14 @@ Images/047542dc-9341-4632-b594-e76a2f61fccc.png
 Controllers/PdfsController.cs :  
 ```csharp
     [HttpPost("pdf2jpg")]
-    public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int height)
+    public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int height, [FromForm] int page = 1)
 ```
     - Get uploaded pdf 
-    - Convert 1st page of the pdf into jpg (with specified resolution width, height)
-    - Return the resulting jpg
+    - Convert pdf page into jpg (with specified resolution width, height)
+    - Return the generated jpg
 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg' --form 'pdf=@"example.pdf"' --form width=200 --form height=120 --form height=120 -O 
+$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg' --form 'pdf=@"example.pdf"' --form width=200 --form height=120 --form height=120 --form page=1 -O 
 
 # curl :
 #  -k | --insecure :            accept https and ignore certificate errors
