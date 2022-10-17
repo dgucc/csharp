@@ -20,7 +20,7 @@ namespace BlazorFile.Api.Services {
 
             using var pageReader = docReader.GetPageReader(pageNumber-1);
 
-            var rawBytes = pageReader.GetImage();
+            var rawBytes = pageReader.GetImage(new NaiveTransparencyRemover(255, 255, 255));
             var width = pageReader.GetPageWidth();
             var height = pageReader.GetPageHeight();
 
