@@ -34,7 +34,7 @@ Solution : Add > New Project... > **Blazor WebAssembly App**
 
 ## Start <F5> to check it's a working basis
 ```bash
-$ curl -k -X 'GET' 'https://localhost:7184/WeatherForecast' -H 'accept: text/plain' | jq
+$ curl -k -X 'GET' 'https://localhost:7001/WeatherForecast' -H 'accept: text/plain' | jq
 [
   {
     "date": "2022-10-15T09:14:57.2192893+02:00",
@@ -74,10 +74,10 @@ Controllers/ImagesController.cs :
 - and return the path of the image
 
 ```bash
-$ curl -k --location --request POST 'https://localhost:7184/api/images' --form 'pdf=@"example.png"'
+$ curl -k --location --request POST 'https://localhost:7001/api/images' --form 'pdf=@"example.png"'
 Images/047542dc-9341-4632-b594-e76a2f61fccc.png
 ```
-    https://localhost:7184/Images/047542dc-9341-4632-b594-e76a2f61fccc.pdf
+    https://localhost:7001/Images/047542dc-9341-4632-b594-e76a2f61fccc.pdf
 
 
 ### Upload pdf => Return 1st page as jpg [POST api/pdfs/pdf2jpg]
@@ -85,14 +85,14 @@ Images/047542dc-9341-4632-b594-e76a2f61fccc.png
 Controllers/PdfsController.cs :  
 ```csharp
     [HttpPost("pdf2jpg")]
-    public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int page = 1)
+    public async Task<IActionResult> page2jpg([FromForm] IFormFile pdf, [FromForm] int page = 1)
 ```
     - Get uploaded pdf 
     - Convert pdf page into jpg
     - Return the generated jpg
 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg' --form 'pdf=@"example.pdf"' --form page=1 -O 
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/pdf2jpg' --form 'pdf=@"example1.pdf"' --form page=1 -O 
 
 # curl :
 #  -k | --insecure :            accept https and ignore certificate errors
@@ -101,25 +101,25 @@ $ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/p
 
 ```
 
-### Specify Width [POST api/pdfs/pdf2jpg/fixedwidth]
+### Specify Width [POST api/pdfs/page2jpg/fixedwidth]
 ```csharp
-    [HttpPost("pdf2jpg/fixedWidth")]
+    [HttpPost("page2jpg/fixedWidth")]
     public async Task<IActionResult> PdfPage2JpgFixedWidth([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int page = 1)
 ```
     - fixed Width => scale Height 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/page2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
 
 ```
 
-### Specify Height [POST api/pdfs/pdf2jpg/fixedheight]
+### Specify Height [POST api/pdfs/page2jpg/fixedheight]
 ```csharp
-    [HttpPost("pdf2jpg/fixedHeight")]
+    [HttpPost("page2jpg/fixedHeight")]
     public async Task<IActionResult> PdfPage2JpgFixedHeight([FromForm] IFormFile pdf, [FromForm] int height, [FromForm] int page = 1)
 ```
     - fixed Height => scale Width  
 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/page2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
 
 ```

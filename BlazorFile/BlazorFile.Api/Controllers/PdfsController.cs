@@ -32,7 +32,7 @@ namespace BlazorFile.Api.Controllers {
             };
         }
 
-        [HttpPost("pdf2jpg/fixedWidth")]
+        [HttpPost("page2jpg/fixedWidth")]
         public async Task<IActionResult> PdfPage2JpgFixedWidth([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
@@ -59,7 +59,7 @@ namespace BlazorFile.Api.Controllers {
         }
 
 
-        [HttpPost("pdf2jpg/fixedHeight")]
+        [HttpPost("page2jpg/fixedHeight")]
         public async Task<IActionResult> PdfPage2JpgFixedHeight([FromForm] IFormFile pdf, [FromForm] int height, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
