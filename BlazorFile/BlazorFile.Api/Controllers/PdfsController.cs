@@ -7,7 +7,7 @@ namespace BlazorFile.Api.Controllers {
     public class PdfsController : ControllerBase {
 
         [HttpPost("pdf2jpg")]
-        public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int height, [FromForm] int page = 1) {
+        public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
 
@@ -23,7 +23,7 @@ namespace BlazorFile.Api.Controllers {
             using (var ms = new MemoryStream()) {
                 pdf.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                image = DocnetService.Pdf2Jpg(fileBytes, width, height, page);
+                image = DocnetService.Pdf2Jpg(fileBytes, page);
             }
 
             //return Ok(File(image, "image/jpeg", $"{Guid.NewGuid()}.jpg"));
