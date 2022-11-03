@@ -80,19 +80,19 @@ Images/047542dc-9341-4632-b594-e76a2f61fccc.png
     https://localhost:7001/Images/047542dc-9341-4632-b594-e76a2f61fccc.pdf
 
 
-### Upload pdf => Return 1st page as jpg [POST api/pdfs/pdf2jpg]
+### Upload pdf => Return 1st page as jpg [POST api/pdf/pdf2jpg]
 
 Controllers/PdfsController.cs :  
 ```csharp
     [HttpPost("pdf2jpg")]
-    public async Task<IActionResult> page2jpg([FromForm] IFormFile pdf, [FromForm] int page = 1)
+    public async Task<IActionResult> PdfPage2Jpg(IFormFile pdf, [FromForm] int page = 1) 
 ```
     - Get uploaded pdf 
     - Convert pdf page into jpg
     - Return the generated jpg
 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/pdf2jpg' --form 'pdf=@"example1.pdf"' --form page=1 -O 
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/pdf2jpg' --form 'pdf=@"example1.pdf"' --form page=1 -O 
 
 # curl :
 #  -k | --insecure :            accept https and ignore certificate errors
@@ -101,25 +101,25 @@ $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/p
 
 ```
 
-### Specify Width [POST api/pdfs/page2jpg/fixedwidth]
+### Specify Width [POST api/pdf/page2jpg/fixedwidth]
 ```csharp
     [HttpPost("page2jpg/fixedWidth")]
-    public async Task<IActionResult> PdfPage2JpgFixedWidth([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int page = 1)
+    public async Task<IActionResult> PdfPage2JpgFixedWidth(IFormFile pdf, [FromForm] int width, [FromForm] int page = 1)
 ```
     - fixed Width => scale Height 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/page2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/page2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
 
 ```
 
-### Specify Height [POST api/pdfs/page2jpg/fixedheight]
+### Specify Height [POST api/pdf/page2jpg/fixedheight]
 ```csharp
     [HttpPost("page2jpg/fixedHeight")]
-    public async Task<IActionResult> PdfPage2JpgFixedHeight([FromForm] IFormFile pdf, [FromForm] int height, [FromForm] int page = 1)
+    public async Task<IActionResult> PdfPage2JpgFixedHeight(IFormFile pdf, [FromForm] int height, [FromForm] int page = 1)
 ```
     - fixed Height => scale Width  
 
 ```bash
-$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdfs/page2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
+$ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/page2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
 
 ```

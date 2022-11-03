@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlazorFile.Api.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class PdfsController : ControllerBase {
+    public class PdfController : ControllerBase {
 
         [HttpPost("pdf2jpg")]
-        public async Task<IActionResult> PdfPage2Jpg([FromForm] IFormFile pdf, [FromForm] int page = 1) {
+        public async Task<IActionResult> PdfPage2Jpg(IFormFile pdf, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
 
@@ -33,7 +33,7 @@ namespace BlazorFile.Api.Controllers {
         }
 
         [HttpPost("page2jpg/fixedWidth")]
-        public async Task<IActionResult> PdfPage2JpgFixedWidth([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int page = 1) {
+        public async Task<IActionResult> PdfPage2JpgFixedWidth(IFormFile pdf, [FromForm] int width, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
 
@@ -60,7 +60,7 @@ namespace BlazorFile.Api.Controllers {
 
 
         [HttpPost("page2jpg/fixedHeight")]
-        public async Task<IActionResult> PdfPage2JpgFixedHeight([FromForm] IFormFile pdf, [FromForm] int height, [FromForm] int page = 1) {
+        public async Task<IActionResult> PdfPage2JpgFixedHeight(IFormFile pdf, [FromForm] int height, [FromForm] int page = 1) {
             if (pdf == null || pdf.Length == 0)
                 return BadRequest("Upload a file");
 
