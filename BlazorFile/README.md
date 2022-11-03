@@ -100,3 +100,26 @@ $ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/p
 #  -O :                         Write output to a local file named as the remote file
 
 ```
+
+### Specify Width [POST api/pdfs/pdf2jpg/fixedwidth]
+```csharp
+    [HttpPost("pdf2jpg/fixedWidth")]
+    public async Task<IActionResult> PdfPage2JpgFixedWidth([FromForm] IFormFile pdf, [FromForm] int width, [FromForm] int page = 1)
+```
+    - fixed Width => scale Height 
+```bash
+$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
+
+```
+
+### Specify Height [POST api/pdfs/pdf2jpg/fixedheight]
+```csharp
+    [HttpPost("pdf2jpg/fixedHeight")]
+    public async Task<IActionResult> PdfPage2JpgFixedHeight([FromForm] IFormFile pdf, [FromForm] int height, [FromForm] int page = 1)
+```
+    - fixed Height => scale Width  
+
+```bash
+$ curl -k --remote-header-name --request POST 'https://localhost:7184/api/pdfs/pdf2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
+
+```
