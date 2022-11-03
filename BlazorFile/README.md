@@ -88,7 +88,7 @@ Controllers/PdfsController.cs :
     public async Task<IActionResult> Pdf2Jpg([FromForm] IFormFile pdf, [FromForm] int page = 1)
 ```
     - Get uploaded pdf 
-    - Convert pdf page into jpg (with specified resolution width, height)
+    - Convert pdf page into jpg
     - Return the generated jpg
 
 ```bash
