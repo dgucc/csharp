@@ -101,12 +101,18 @@ $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/pd
 
 ```
 
+$\Large \frac{width_{1}}{height_{1}} = \frac{width_{2}}{height_{2}}$
+
 ### Specify Width [POST api/pdf/page2jpg/fixedwidth]
+
 ```csharp
     [HttpPost("page2jpg/fixedWidth")]
     public async Task<IActionResult> PdfPage2JpgFixedWidth(IFormFile pdf, [FromForm] int width, [FromForm] int page = 1)
 ```
     - fixed Width => scale Height 
+
+$\Large height_{2}=\frac{width_{2}\ *\ height_{1}}{width_{1}}$
+
 ```bash
 $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/page2jpg/fixedwidth' --form 'pdf=@"example1.pdf"' --form width=300 --form page=1 -O
 
@@ -118,6 +124,8 @@ $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/pa
     public async Task<IActionResult> PdfPage2JpgFixedHeight(IFormFile pdf, [FromForm] int height, [FromForm] int page = 1)
 ```
     - fixed Height => scale Width  
+
+$\Large width_{2}=\frac{width_{1}\ *\ height_{2}}{height_{1}}$
 
 ```bash
 $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/page2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
