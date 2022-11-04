@@ -68,7 +68,7 @@ BlazorFile.Api.csproj :
 Controllers/ImagesController.cs :  
 ```csharp
     [HttpPost]
-    public async Task<IActionResult> Post([FromForm] IFormFile image) 
+    public async Task<IActionResult> Post(IFormFile image) 
 ```
 - Store uploaded Image in wwwroot/Images   
 - and return the path of the image
