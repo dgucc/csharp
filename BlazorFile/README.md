@@ -1,9 +1,11 @@
-# ASP.NET Core Web API 
+﻿# ASP.NET Core Web API 
 # Upload pdf => Return 1st page as jpg
 
 References :  
 - [Uploading Files in Blazor Web Assembly & ASP.NET Core Web API [Blazor Topics] | AK Academy](https://www.youtube.com/watch?v=i6C6ospRrYI&list=PLFJQnCcZXWjsHh_-fdpNmZJn1LhNm7ck0&index=3)  ([Github](https://github.com/aksoftware98/blazorfiles))
 - [DocNET.Core To convert pdf to jpg](https://github.com/GowenGit/docnet)
+- [Read/Modify Pdf Metadata Using Itextsharp](https://www.folkstalk.com/tech/read-modify-pdf-metadata-using-itextsharp-without-showing-any-data-to-user-on-pdf-properties-with-examples/)
+
 
 
 ## Create project BlazorFiles.Api
@@ -131,3 +133,65 @@ $\Large width_{2}=\frac{width_{1}\ *\ height_{2}}{height_{1}}$
 $ curl -k --remote-header-name --request POST 'https://localhost:7001/api/pdf/page2jpg/fixedheight' --form 'pdf=@"example1.pdf"' --form height=500 --form page=1 -O
 
 ```
+---
+
+## IText7 and ITextSharp 
+**Add Reference to iText7 and iTextSharp**  
+.csproj :  
+
+```xml
+<ItemGroup>
+	<PackageReference Include="itext7" Version="7.2.4" />
+	<PackageReference Include="iTextSharp" Version="5.5.13.3" />
+</ItemGroup>
+```
+
+Version :
+- iText7 : 7.2.4 - latest update oct 2022
+- iTextSharp : 5.5.13.3 - lastest febr 2022
+
+### API to modify some PDF metadata [POST ​/api​/Pdf​/Metadata​/Update]
+**PdfController.cs** :  
+
+```csharp
+[HttpPost("Metadata/Update")] 
+public async Task<IActionResult> PDFMetadataUpdate(IFormFile pdf, [FromForm] string author, [FromForm] string title, [FromForm] string abstr) {
+```
+
+**ITextService.cs** :  
+
+```csharp
+public static byte[] UpdatePDFMetaData(byte[] pdf, string author, string title, string abstr) {
+    PdfReader reader = new PdfReader(pdf);
+    using MemoryStream ms = new MemoryStream();
+    using (PdfStamper stamper = new(reader, ms)) {
+
+        Dictionary<String, String> info = reader.Info;
+
+        // Before...
+        Console.WriteLine("Before : ...");
+        Console.WriteLine(info["Title"]);
+        Console.WriteLine(info["Author"]);
+
+        reader.Info.Clear();
+
+        // Modify Metadata
+        info["Title"] = title;
+        info["Author"] = author;
+        info["Abstract"] = abstr;
+        stamper.MoreInfo = info;
+    }
+
+    // For test purposes            
+    File.WriteAllBytes(Environment.CurrentDirectory + @"/Test/result.pdf", ms.ToArray());
+
+    return ms.ToArray();
+}
+```
+
+---
+
+## Tips
+
+**To upload file with Swagger component**  
+Remove "FromForm" annotation : ~~[FromForm]~~ IFormFile pdf
