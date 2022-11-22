@@ -23,7 +23,11 @@ namespace BlazorFile.Api.Controllers {
             using (var ms = new MemoryStream()) {
                 pdf.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                image = DocnetService.PdfPage2Jpg(fileBytes, page);
+                try {
+                    image = DocnetService.PdfPage2Jpg(fileBytes, page);
+                } catch (Exception ex) {
+                    return BadRequest(ex.StackTrace);
+                }
             }
 
             //return Ok(File(image, "image/jpeg", $"{Guid.NewGuid()}.jpg"));
@@ -49,7 +53,11 @@ namespace BlazorFile.Api.Controllers {
             using (var ms = new MemoryStream()) {
                 pdf.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                image = DocnetService.PdfPage2JpgFixedWidth(fileBytes, width, page);
+                try {
+                    image = DocnetService.PdfPage2JpgFixedWidth(fileBytes, width, page);
+                } catch (Exception ex) {
+                    return BadRequest(ex.StackTrace);
+                }
             }
 
             //return Ok(File(image, "image/jpeg", $"{Guid.NewGuid()}.jpg"));
@@ -76,7 +84,11 @@ namespace BlazorFile.Api.Controllers {
             using (var ms = new MemoryStream()) {
                 pdf.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                image = DocnetService.PdfPage2JpgFixedHeight(fileBytes, height, page);
+                try {
+                    image = DocnetService.PdfPage2JpgFixedHeight(fileBytes, height, page);
+                } catch (Exception ex) {
+                    return BadRequest(ex.StackTrace);
+                }
             }
 
             //return Ok(File(image, "image/jpeg", $"{Guid.NewGuid()}.jpg"));
@@ -84,5 +96,37 @@ namespace BlazorFile.Api.Controllers {
                 FileDownloadName = $"{Guid.NewGuid()}.jpg"
             };
         }
+
+        [HttpPost("Metadata/Update")] // Author, Title, Abstract
+        public async Task<IActionResult> PDFMetadataUpdate(IFormFile pdf, [FromForm] string author = "test_author", [FromForm] string title = "test_title", [FromForm] string abstr = "test_abstract") {
+            if (pdf == null || pdf.Length == 0)
+                return BadRequest("Upload a file");
+
+            string fileName = pdf.FileName;
+            string extension = Path.GetExtension(fileName);
+
+            string[] allowedExtensions = { ".pdf" };
+
+            if (!allowedExtensions.Contains(extension))
+                return BadRequest("File is not a pdf");
+
+            byte[] result;
+            using (var ms = new MemoryStream()) {
+                pdf.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                try {
+                    result = ITextService.UpdatePDFMetaData(fileBytes, author, title, abstr);
+                } catch (Exception ex) {
+                    return BadRequest(ex.StackTrace);
+                }
+            }
+
+            //return Ok(File(result, "application/pdf", $"{Guid.NewGuid()}.pdf"));
+            return new FileStreamResult(new MemoryStream(result), "application/pdf") {
+                FileDownloadName = $"{Guid.NewGuid()}.pdf"
+            };
+        }
+
+
     }
 }

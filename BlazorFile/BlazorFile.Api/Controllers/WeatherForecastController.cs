@@ -1,6 +1,8 @@
+using BlazorFile.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlazorFile.Api.Controllers {
+namespace BlazorFile.Api.Controllers
+{
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase {

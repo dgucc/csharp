@@ -1,5 +1,7 @@
-namespace BlazorFile.Api {
-    public class WeatherForecast {
+namespace BlazorFile.Api.Services
+{
+    public class WeatherForecast
+    {
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
