@@ -63,3 +63,7 @@ Create a omnisharp.json file in the root of your project :
 ```
 
 <Ctrl+Shift+P> Restart Omnisharp  
+
+### Hide References count in Editor 
+
+<Ctrl+Shif+P> Open User Settings : uncheck "Controls whether the editor Show CodeLens"  
