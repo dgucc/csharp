@@ -50,5 +50,5 @@ Create a omnisharp.json file in the root of your project :
   "omnisharp.autoStart": true,
   "omnisharp.enableEditorConfigSupport": false
 ```
-or 
+
 <Ctrl+Shift+P> Restart Omnisharp  
