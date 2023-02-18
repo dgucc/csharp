@@ -22,9 +22,9 @@ App_Data/
 [C# Lambda expressions](https://www.tutorialsteacher.com/linq/linq-lambda-expression)  
 
 
-## vscode Tips
+## VsCode Tips
 
-[Install Visual Studio Code and .NET Core for C# coding on Linux](https://www.pragmaticlinux.com/2021/03/install-visual-studio-code-and-net-core-for-c-coding-on-linux/)  
+### [Install Visual Studio Code and .NET Core for C# coding on Linux](https://www.pragmaticlinux.com/2021/03/install-visual-studio-code-and-net-core-for-c-coding-on-linux/)  
 
 ```bash
 $ sudo apt install apt-transport-https
@@ -35,7 +35,7 @@ $ sudo apt-get install -y dotnet-sdk-6.0
 $ sudo apt-get install -y aspnetcore-runtime-6.0
 ```
 
-Format curly brackets on the same line c# 
+### Format curly brackets on the same line c# 
 
 Create a omnisharp.json file in the root of your project :   
 ```json
