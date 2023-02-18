@@ -20,3 +20,35 @@ App_Data/
 [Delegates and Business Objects](https://www.codeproject.com/Articles/14178/Delegates-and-Business-Objects)  
 [C# Delegates](https://www.tutorialsteacher.com/csharp/csharp-delegates)  
 [C# Lambda expressions](https://www.tutorialsteacher.com/linq/linq-lambda-expression)  
+
+
+## vscode Tips
+
+Format curly brackets on the same line c# 
+
+Create a omnisharp.json file in the root of your project :   
+```json
+{
+    "FormattingOptions": {
+        "NewLinesForBracesInLambdaExpressionBody": false,
+        "NewLinesForBracesInAnonymousMethods": false,
+        "NewLinesForBracesInAnonymousTypes": false,
+        "NewLinesForBracesInControlBlocks": false,
+        "NewLinesForBracesInTypes": false,
+        "NewLinesForBracesInMethods": false,
+        "NewLinesForBracesInProperties": false,
+        "NewLinesForBracesInObjectCollectionArrayInitializers": false,
+        "NewLinesForBracesInAccessors": false,
+        "NewLineForElse": false,
+        "NewLineForCatch": false,
+        "NewLineForFinally": false
+    }
+}
+```
+<Ctrl+Shif+P> Open User Settings (JSON) :  
+```json
+  "omnisharp.autoStart": true,
+  "omnisharp.enableEditorConfigSupport": false
+```
+or 
+<Ctrl+Shift+P> Restart Omnisharp  
