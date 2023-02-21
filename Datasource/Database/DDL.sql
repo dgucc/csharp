@@ -8,5 +8,5 @@ CREATE TABLE sandbox.Composite(
 	Description nvarchar(100) NULL
 )
 GO
-ALTER TABLE test.Composite ADD CONSTRAINT PK_Composite PRIMARY KEY CLUSTERED (Id)
+ALTER TABLE sandbox.Composite ADD CONSTRAINT PK_Composite PRIMARY KEY CLUSTERED (Id)
 GO
