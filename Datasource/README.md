@@ -1,6 +1,6 @@
-# Datasource
+# Datasource : Simple example
 
-1. References  
+## 1. References  
 TestDataSource.csproj :   
 
 ```xml
@@ -10,7 +10,7 @@ TestDataSource.csproj :
   </ItemGroup>
 ```
 
-2. ConnectionString   
+## 2. ConnectionString   
 ConnectionString in App.config file :  
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -21,7 +21,7 @@ ConnectionString in App.config file :
 </configuration>
 ```
 
-3. Singleton  
+## 3. Singleton  
 SingletonTestDb.cs :  
 ```csharp
 using System.Configuration;
@@ -51,7 +51,7 @@ namespace ccrek.sandbox {
 }
 ```
 
-4. Program.cs :   
+## 4. Program.cs :   
 ```csharp
 using System.Data.SqlClient;
 namespace ccrek.sandbox {
@@ -69,7 +69,7 @@ namespace ccrek.sandbox {
 }
 ```
 
-5. Output  
+## 5. Output  
 >ServerVersion: 15.00.4153
 DataSource: (localdb)\MSSQLLocalDB
 Database: DataSourceDb
