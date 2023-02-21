@@ -70,7 +70,7 @@ namespace ccrek.sandbox {
 ```
 
 ## 5. Output  
->ServerVersion: 15.00.4153
-DataSource: (localdb)\MSSQLLocalDB
-Database: DataSourceDb
-State: Open
+>ServerVersion: 15.00.4153  
+DataSource: (localdb)\MSSQLLocalDB  
+Database: DataSourceDb  
+State: Open  
