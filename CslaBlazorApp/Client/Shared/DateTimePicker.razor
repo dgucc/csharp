@@ -1,0 +1,73 @@
+﻿@using Csla;
+@inject IStringLocalizer<SharedResources> Localize
+
+@*cf. https://github.com/pekspro/BlazorTimePicker*@
+<div>
+	<div>
+		@if (!UseNative) {
+			<input type="date" class="form-control w-auto d-inline" @bind-value="@Date" disabled="@IsDisabled" />
+			<TimePicker @bind-SecondOfDay="SecondOfDay" UseNativeTimePicker="@UseNative" IsDisabled="IsDisabled" />
+		} else {
+			<input type="datetime-local" class="form-control w-auto d-inline" value="@(DateAndTime.ToString("yyyy-MM-ddTHH:mm"))" disabled="@IsDisabled"
+			   @onchange="async (e) => { DateAndTime = DateTime.Parse(e.Value.ToString()); await NotifyChanged(); }" />
+		}
+	</div>
+	<div style="font-size:0.90em">
+		<span style="font-size:x-small">@(((DateTime)Property.Value).ToString("dd MMM yyyy HH:mm"))</span>
+		@if (!string.IsNullOrEmpty(Property.ErrorText)) {
+				<br />
+				<span class="text-danger">@Localize[Property.ErrorText]</span>
+		}
+		@if (!string.IsNullOrEmpty(Property.WarningText)) {
+				<br />
+				<span class="text-warning">@Localize[Property.WarningText]</span>
+		}
+		@if (!string.IsNullOrEmpty(Property.InformationText)) {
+				<br />
+				<span class="text-info">@Localize[Property.InformationText]</span>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Csla.Blazor.IPropertyInfo Property { get; set; }
+
+	[Parameter]
+	public DateTime DateAndTime { get; set; }			
+
+	[Parameter]
+	public EventCallback<DateTime> DateAndTimeChanged { get; set; }
+
+	[Parameter]
+	public bool IsDisabled { get; set; }
+
+	[Parameter]
+	public bool UseNative { get; set; }
+
+	private DateTime Date {
+		get {
+			return DateAndTime.Date;
+		}
+		set {
+			DateAndTime = value.AddSeconds(SecondOfDay);
+			Property.Value = DateAndTime.Date;
+			_ = NotifyChanged();
+		}
+	}
+
+	private int SecondOfDay {
+		get {
+			return DateAndTime.Hour * 3600 + DateAndTime.Minute * 60;
+		}
+		set {
+			DateAndTime = DateAndTime.Date.AddSeconds(value);
+			Property.Value = DateAndTime.Date;
+			_ = NotifyChanged();
+		}
+	}
+
+	private Task NotifyChanged() {
+		return DateAndTimeChanged.InvokeAsync(DateAndTime);
+	}
+}

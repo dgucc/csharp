@@ -1,0 +1,75 @@
+﻿@page "/Publications"
+
+@using CslaBlazorApp.Shared
+@inject Csla.IDataPortal<CslaBlazorApp.Shared.Publications> publicationListPortal
+@inject Csla.IDataPortal<Publication> publicationEditPortal
+@inject Csla.Blazor.ViewModel<CslaBlazorApp.Shared.Publications> vm
+@inject IStringLocalizer<SharedResources> Localize
+
+<h1>@Localize["Publications.Title"]</h1>
+
+<p class="alert-danger">@vm.ViewModelErrorText</p>
+
+@if (vm.Model == null) {
+	<p>Loading List...</p>
+} else {
+	<p>
+		<a href="Publications/Add" class="btn btn-outline-primary">@Localize["Publications.btn.Add"]</a>
+	</p>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>@Localize["Publications.th.Id"]</th>
+				<th>@Localize["Publication.th.Cover"]</th>
+				<th>@Localize["Publications.th.ApprovalDate"]</th>
+				<th>@Localize["Publications.th.PublishDate"]</th>
+				<th>@Localize["Publications.th.Titles"]</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in vm.Model) {
+				<tr>
+					<td>@item.Id</td>
+					<td>
+						<div>
+							@if(item.Cover != null) {
+								<img class="cover" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(item.Cover)) />
+							}
+						</div>
+					</td>
+					<td>@item.ApprovalDate.ToString("dd/MM/yyyy")</td>
+					<td>@(item.PublishDate.GetHashCode() == 0 ? "" : item.PublishDate.ToString("dd/MM/yyyy HH:mm"))</td>
+					<td>
+						<div style="width:auto;max-width:200px;">
+							<span style="font-size:x-small;font-weight:bold;">FR</span> @item.TitleFr<br />
+							<span style="font-size:x-small;font-weight:bold;">NL</span> @item.TitleNl<br />
+							@*
+							<span style="font-size:x-small;font-weight:bold;">DE</span> @item.TitleDe<br />
+							<span style="font-size:x-small;font-weight:bold;">EN</span> @item.TitleEn
+							*@
+						</div>
+					</td>
+					<td>
+						<a href="Publications/Edit/@item.Id" class="btn btn-outline-primary">@Localize["Publications.btn.Edit"]</a>&nbsp;
+						<a href="javascript: void(0);" class="btn btn-danger" @onclick="() => Delete(item.Id)">@Localize["Publications.btn.Delete"]</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	protected override async Task OnParametersSetAsync() {
+		await vm.RefreshAsync(() => publicationListPortal.FetchAsync());
+		var temp = vm.Exception;
+	}
+
+	private async void Delete(int id) {
+		vm.Model = null;
+		await publicationEditPortal.DeleteAsync(id);
+		await vm.RefreshAsync(() => publicationListPortal.FetchAsync());
+		StateHasChanged();
+	}
+}

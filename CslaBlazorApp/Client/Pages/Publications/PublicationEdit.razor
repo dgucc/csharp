@@ -1,0 +1,152 @@
+﻿@page "/Publications/Add"
+@page "/Publications/Edit/{id}"
+
+@using CslaBlazorApp.Shared
+@using Csla.Blazor
+
+@inject Csla.IDataPortal<Publication> publicationEditPortal
+@inject Csla.Blazor.ViewModel<Publication> vm
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<SharedResources> Localize
+
+<h1>
+	@if (vm.Model != null && vm.Model.IsNew) {
+		<span>@Localize["Publication.Add.Title"]</span>
+	} else {
+		<span>@Localize["Publication.Edit.Title"]</span>
+	}
+</h1>
+
+
+<p style="background-color:red;color:white">@vm.ViewModelErrorText</p>
+
+@if (vm.Model == null) {
+	<p>Loading Publication...</p>
+} else {
+	<p>
+		<a href="publications">@Localize["Publication.Edit.btn.Back"]</a>
+	</p>
+	<EditForm Model="@vm.Model">
+		@*<CslaValidator />*@
+		<ValidationSummary>
+			@vm.ViewModelErrorText
+		</ValidationSummary>
+		<table class="table">
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Id-->
+				<tr>
+					<td>Id</td>
+					<td>@vm.Model.Id</td>
+				</tr>
+				<!-- Cover-->
+				<tr>
+					<td>@Localize["Publication.th.Cover"]</td>
+					<td>
+						@if (@vm.Model.Cover != null) {
+							<img class="cover" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@vm.Model.Cover)) height="150px"/>
+					}					
+					</td>
+				</tr>
+				<!-- ApprovalDate-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.ApprovalDate).FriendlyName)]</td>
+					<td>
+						<DateInput Property="@(vm.GetPropertyInfo(() => vm.Model.ApprovalDate))" EmptyIsMin="true" />
+					</td>
+				</tr>
+				<!-- PublishDate-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.PublishDate).FriendlyName)]</td>
+					<td>
+						<DateTimePicker Property="@(vm.GetPropertyInfo(() => vm.Model.PublishDate))" @bind-DateAndTime="@vm.Model.PublishDate" UseNative="@false" IsDisabled="@false" />
+					</td>
+				</tr>
+				<!-- RequestorEmail-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.RequestorEmail).FriendlyName)]</td>
+					<td>
+						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.RequestorEmail))" />
+					</td>
+				</tr>
+				<!-- TitleFr-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleFr).FriendlyName)]</td>
+					<td>
+						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleFr))" />
+					</td>
+				</tr>
+				<!-- TitleNl-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleNl).FriendlyName)]</td>
+					<td>
+						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleNl))" />
+					</td>
+				</tr>
+				<!-- TitleDe-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleDe).FriendlyName)]</td>
+					<td>
+						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleDe))" />
+					</td>
+				</tr>
+				<!-- TitleEn-->
+				<tr>
+					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleEn).FriendlyName)]</td>
+					<td>
+						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleEn))" />
+					</td>
+				</tr>
+			</tbody>
+			<!-- BusinessBase Meta-Data-->
+			<tfooter>
+				<tr>
+					<td>Is New ?</td>
+					<td>@vm.Model.IsNew</td>
+				</tr>
+				<tr>
+					<td>Is Modified ?</td>
+					<td>@vm.Model.IsDirty</td>
+				</tr>
+				<tr>
+					<td>Is Valid ?</td>
+					<td>
+					@if(vm.Model.BrokenRulesCollection.Count() > 0) {
+						<span style="color:red">False</span>
+					} else {
+						<span style="color:green">True</span>
+					} 
+					</td>
+				</tr>
+				<tr>
+					<td>Is Savable ?</td>
+					<td>@vm.Model.IsSavable</td>
+				</tr>
+
+			</tfooter>
+		</table>
+		<button class="btn btn-primary" @onclick="vm.SaveAsync" disabled="@(!vm.Model.IsSavable)">@Localize["Publication.Edit.btn.Save"]</button>
+	</EditForm>
+}
+
+@code {
+	[Parameter]
+	public string id { get; set; }
+
+	protected override void OnInitialized() {
+		vm.Saved += () => NavigationManager.NavigateTo("/publications");
+		vm.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
+	}
+
+	protected override async Task OnParametersSetAsync() {
+		if (string.IsNullOrWhiteSpace(id))
+			await vm.RefreshAsync(() => publicationEditPortal.CreateAsync());
+		else
+			await vm.RefreshAsync(() => publicationEditPortal.FetchAsync(int.Parse(id)));
+	}
+}

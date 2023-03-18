@@ -1,0 +1,32 @@
+﻿@inject IStringLocalizer<SharedResources> Localize
+
+<div>
+	<input @bind-value="TextValue" @bind-value:event="oninput" type="@InputType" disabled="@(!Property.CanWrite)" class="form-control"/>
+	<div style="font-size:0.90em">
+		@if (!string.IsNullOrEmpty(Property.ErrorText)) {
+			<br/>
+			<span class="text-danger">@Localize[Property.ErrorText]</span>
+		}
+		@if (!string.IsNullOrEmpty(Property.WarningText)) {
+			<br />
+			<span class="text-warning">@Localize[Property.WarningText]</span>
+		}
+		@if (!string.IsNullOrEmpty(Property.InformationText)) {
+			<br />
+			<span class="text-info">@Localize[Property.InformationText]</span>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Csla.Blazor.IPropertyInfo Property { get; set; }
+
+	[Parameter]
+	public string InputType { get; set; } = "text";
+
+	private string TextValue {
+		get => (string)Property.Value;
+		set => Property.Value = value;
+	}
+}

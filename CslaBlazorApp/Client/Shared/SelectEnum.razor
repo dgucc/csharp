@@ -1,0 +1,27 @@
+﻿@inject IStringLocalizer<SharedResources> Localize
+
+<div>
+	<select @bind="TextValue" disabled="@(!Property.CanWrite)" class="form-select">
+		@foreach (var item in Enum.GetNames(EnumType)) {
+			<option value="@item">@item</option>
+		}
+	</select>
+	<div style="font-size:0.90em">
+		<span class="text-danger">@Localize[Property.ErrorText]</span>
+		<span class="text-warning">@Localize[Property.WarningText]</span>
+		<span class="text-info">@Localize[Property.InformationText]</span>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Csla.Blazor.IPropertyInfo Property { get; set; }
+
+	[Parameter]
+	public Type EnumType { get; set; }
+
+	private string TextValue {
+		get => (string)Property.Value;
+		set => Property.Value = value;
+	}
+}
