@@ -17,7 +17,9 @@ namespace ccrek.sandbox {
 		public static SqlConnection GetInstance() {
 			if (_instance == null) {
 				lock (_syncObject) {
-					new SingletonTestDb();
+					if (_instance == null) {
+						new SingletonTestDb();
+					}
 				}
 			}
 			return _instance;
