@@ -41,7 +41,7 @@ $ sudo apt-get install -y aspnetcore-runtime-6.0
 
 ### Format curly brackets on the same line c# 
 
-Create a omnisharp.json file in the root of your project :   
+Create a omnisharp.json file in the root of your project or in `%userprofile%\.omnisharp\` folder :   
 ```json
 {
     "FormattingOptions": {
