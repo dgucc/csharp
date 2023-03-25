@@ -4,6 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DataAccess {
+	public enum EnumLanguageCode {
+		French = 1,
+		Dutch = 2,
+		German = 3,
+		English = 4
+	}
+
     public enum EnumApprovedBy {
         [Display(Name = "Assemblée générale")]
         GeneralAssembly = 1,
@@ -47,6 +54,7 @@ namespace DataAccess {
         IndividualReport = 10
 
     }
+    
     public enum EnumLegislativeLevel {
         [Display(Name = "État fédéral")]
         FederalState = 1,
@@ -70,5 +78,31 @@ namespace DataAccess {
         Provinces = 7
 
     }
+
+	public enum EnumDocumentType {
+		[Display(Name = "Rapport")]
+		Report = 1,
+
+		[Display(Name = "Synthèse")]
+		Summary = 2,
+
+		[Display(Name = "Communiqué de presse")]
+		PressRelease = 3,
+
+		[Display(Name = "Abstrait")]
+		Abstract = 4,
+
+		[Display(Name = "Conclusions et recommandations")]
+		ConclusionsAndRecommendations = 5,
+
+		[Display(Name = "Annexe")]
+		Attachment = 6,
+
+		[Display(Name = "Divers")]
+		Misc = 7,
+
+		[Display(Name = "Photo de couverture")]
+		CoverPhoto = 8
+	}
 
 }
