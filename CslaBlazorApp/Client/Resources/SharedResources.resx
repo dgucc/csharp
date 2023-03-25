@@ -150,6 +150,15 @@
   <data name="Publication.Edit.TitleNl" xml:space="preserve">
     <value>Title NL</value>
   </data>
+  <data name="Publication.Edit.Upload.Modal.btn.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Publication.Edit.Upload.Modal.btn.Show" xml:space="preserve">
+    <value>Upload...</value>
+  </data>
+  <data name="Publication.Edit.Upload.PDF.Title" xml:space="preserve">
+    <value>Add PDF Documents</value>
+  </data>
   <data name="Publication.Error.At_least_one_title_(FR,NL,DE,EN)_must_be_defined." xml:space="preserve">
     <value>At least one title (FR,NL,DE,EN) must be defined.</value>
   </data>

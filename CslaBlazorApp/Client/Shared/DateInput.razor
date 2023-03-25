@@ -1,4 +1,6 @@
 ﻿@using Csla;
+@inject IStringLocalizer<SharedResources> Localize
+
 <div>
 	<div class=" col-sm-6">
 		<InputDate @bind-Value="SelectedDate" @bind-Value:format="MM/dd/yyyy" class="form-control" />
@@ -9,16 +11,16 @@
 		@if (!string.IsNullOrEmpty(Property.ErrorText)) {
 			<br />
 
-			<span class="text-danger">@Property.ErrorText</span>
+			<span class="text-danger">@Localize[Property.ErrorText]</span>
 		}
 		@if (!string.IsNullOrEmpty(Property.WarningText)) {
 			<br />
-			<span class="text-warning">@Property.WarningText</span>
+			<span class="text-warning">@Localize[Property.WarningText]</span>
 		}
 		@if (!string.IsNullOrEmpty(Property.InformationText)) {
 			<br />
 
-			<span class="text-info">@Property.InformationText</span>
+			<span class="text-info">@Localize[Property.InformationText]</span>
 		}
 	</div>
 </div>

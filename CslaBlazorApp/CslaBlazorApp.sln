@@ -21,11 +21,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Database\genUpdateStoredProc.sql = Database\genUpdateStoredProc.sql
 		notes.txt = notes.txt
 		README.md = README.md
+		Database\usp_Documents_select.sql = Database\usp_Documents_select.sql
 		Database\usp_Document_insert.sql = Database\usp_Document_insert.sql
+		Database\usp_Document_select.sql = Database\usp_Document_select.sql
 		Database\usp_Document_update.sql = Database\usp_Document_update.sql
-		Database\usp_Publciation_update.sql = Database\usp_Publciation_update.sql
+		Database\usp_Publications_select.sql = Database\usp_Publications_select.sql
 		Database\usp_PublicationTopic_insert.sql = Database\usp_PublicationTopic_insert.sql
+		Database\usp_Publication_delete.sql = Database\usp_Publication_delete.sql
 		Database\usp_Publication_insert.sql = Database\usp_Publication_insert.sql
+		Database\usp_Publication_select.sql = Database\usp_Publication_select.sql
+		Database\usp_Publication_update.sql = Database\usp_Publication_update.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{9BB7866C-CAEB-451D-8421-161664FDA330}"

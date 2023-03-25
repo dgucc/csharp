@@ -36,6 +36,7 @@
 				<tr>
 					<th></th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -102,6 +103,31 @@
 						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleEn))" />
 					</td>
 				</tr>
+				<!-- PDFs-->
+				<tr>
+					<td>PDF</td>
+					<td>
+						<div class="flex-column">
+							<div class="flex-item"></div>
+							<div class="flex-item"></div>
+						</div>
+					</td>
+					<td>
+						<button class="btn btn-outline-secondary" @onclick="OpenModal">@Localize["Publication.Edit.Upload.Modal.btn.Show"]</button>
+
+						<!-- Modal Dialog -->
+						<ModalDialog Title=@Localize["Publication.Edit.Upload.PDF.Title"] IsOpened="@isOpened">
+							<ModalBody>								
+								<h4>Placeholder to upload Files...</h4>
+								<p>Templated component in Blazor WebAssembly</p>
+							</ModalBody>
+							<ModalFooter>
+								<button class="btn btn-light " @onclick="() => isOpened = false">@Localize["Publication.Edit.Upload.Modal.btn.Close"]</button>
+							</ModalFooter>
+						</ModalDialog>
+					</td>
+				</tr>
+
 			</tbody>
 			<!-- BusinessBase Meta-Data-->
 			<tfooter>
@@ -148,5 +174,12 @@
 			await vm.RefreshAsync(() => publicationEditPortal.CreateAsync());
 		else
 			await vm.RefreshAsync(() => publicationEditPortal.FetchAsync(int.Parse(id)));
+	}
+
+	// Modal Dialog
+	bool isOpened = false;
+
+	void OpenModal() {
+		isOpened = true;
 	}
 }
