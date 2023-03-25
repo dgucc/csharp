@@ -130,8 +130,10 @@ Clean up before copying, backuping
 
 [CSS tools for web designers](https://www.cssmatic.com/box-shadow)  
 
-[Templated Components in Blazor WebAssembly - Modal Popup - AK Academy](https://www.youtube.com/watch?v=g3vH-KYmsHQ)
+[Templated Components in Blazor WebAssembly - Modal Popup - AK Academy](https://www.youtube.com/watch?v=g3vH-KYmsHQ)  
 [GitHub](https://github.com/aksoftware98/blazor-modal-popup)  
+
+
 
 [working DateTimePicker](https://github.com/pekspro/BlazorTimePicker)  
 

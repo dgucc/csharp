@@ -51,6 +51,12 @@ INSERT
         @Language,
         @PublicationId
     ) 
+    
+-- Update Publication.Cover if Thumbnail <> NULL
+IF NOT(@Thumbnail IS NULL) AND @DocumentType = 'Report' 
+BEGIN 
+    EXEC [dbo].[usp_Publication_update] @Id = @PublicationId, @Cover = @Thumbnail
+END 
 
 -- Return the new ID   
 SELECT SCOPE_IDENTITY();

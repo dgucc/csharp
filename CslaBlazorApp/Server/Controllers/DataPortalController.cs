@@ -21,7 +21,7 @@ namespace CslaBlazorApp.Server.Controllers {
 
 		public override Task PostAsync([FromQuery] string operation) {
 			var result = base.PostAsync(operation);
-			_log.Info(string.Format("[API] PostAsync operation : {0}", operation));
+			_log.Info(string.Format("[API] PostAsync operation : {0}\n", operation));
 			return result;
 		}
 	}

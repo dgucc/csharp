@@ -27,8 +27,8 @@ namespace DataAccess.MSSQL {
 		public bool Delete(int id) {
 			conn.Open();
 			using SqlCommand cmd = conn.CreateCommand();
-			cmd.CommandType = CommandType.Text;
-			cmd.CommandText = "DELETE FROM [dbo].[Publication] WHERE [Id]=@Id";
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandText = "usp_Publication_delete";
 			cmd.Parameters.AddWithValue("@Id", id);
 			try {
 				cmd.ExecuteNonQuery();
@@ -41,9 +41,9 @@ namespace DataAccess.MSSQL {
 		public bool Exists(int id) {
 			conn.Open();
 			using SqlCommand cmd = conn.CreateCommand();
-			cmd.CommandType = CommandType.Text;
-			cmd.CommandText = "SELECT Id FROM [dbo].[Publication] WHERE [Id]=@Id";
-			cmd.Parameters.AddWithValue("@Id", id);
+			cmd.CommandType = System.Data.CommandType.StoredProcedure;
+			cmd.CommandText = "usp_Publication_select";
+			cmd.Parameters.AddWithValue("@id", id);
 			var result = cmd.ExecuteReader();
 			if (result.HasRows == false) {
 				return false;
@@ -56,8 +56,8 @@ namespace DataAccess.MSSQL {
 			PublicationDTO dto = null;
 			conn.Open();
 			using SqlCommand cmd = conn.CreateCommand();
-			cmd.CommandType = System.Data.CommandType.Text;
-			cmd.CommandText = "SELECT [Id],[ApprovalDate],[PublishDate],[RequestorEmail],[TitleNl],[TitleFr],[TitleDe],[TitleEn],[Cover] FROM [dbo].[Publication] WHERE [Id]=@Id";
+			cmd.CommandType = System.Data.CommandType.StoredProcedure;
+			cmd.CommandText = "usp_Publication_select";
 			cmd.Parameters.AddWithValue("@id", id);
 			using SqlDataReader reader = cmd.ExecuteReader();
 			reader.Read();
@@ -65,11 +65,11 @@ namespace DataAccess.MSSQL {
 				Id = reader.GetInt32("Id"),
 				ApprovalDate = reader.GetDateTime("ApprovalDate"),
 				PublishDate = reader.GetDateTime("PublishDate"),
-				RequestorEmail = reader.GetString("RequestorEmail"),
-				TitleFr = reader.GetString("TitleFr"),
-				TitleNl = reader.GetString("TitleNl"),
-				TitleDe = reader.GetString("TitleDe"),
-				TitleEn = reader.GetString("TitleEn"),
+				RequestorEmail = reader.GetString("RequestorEmail") ?? "",
+				TitleFr = reader.GetString("TitleFr") ?? "",
+				TitleNl = reader.GetString("TitleNl") ?? "",
+				TitleDe = reader.GetString("TitleDe") ?? "",
+				TitleEn = reader.GetString("TitleEn") ?? "",
 			};
 			if (!reader.IsDBNull("Cover")) {
 				dto.Cover = DalUtils.ParseStrictByteArray(reader, "Cover");
@@ -82,19 +82,19 @@ namespace DataAccess.MSSQL {
 			List<PublicationDTO> list = new List<PublicationDTO>();
 
 			using SqlCommand cmd = conn.CreateCommand();
-			cmd.CommandType = System.Data.CommandType.Text;
-			cmd.CommandText = "SELECT [Id],[ApprovalDate],[PublishDate],[RequestorEmail],[TitleNl],[TitleFr],[TitleDe],[TitleEn],[Cover] FROM [dbo].[Publication]";
+			cmd.CommandType = System.Data.CommandType.StoredProcedure;
+			cmd.CommandText = "usp_Publications_select";
 			using SqlDataReader reader = cmd.ExecuteReader();
 			while (reader.Read()) {
 				var dto = new PublicationDTO();
 				dto.Id = reader.GetInt32("Id");
 				dto.ApprovalDate = reader.GetDateTime("ApprovalDate");
 				dto.PublishDate = reader.GetDateTime("PublishDate");
-				dto.RequestorEmail = reader.GetString("RequestorEmail");
-				dto.TitleFr = reader.GetString("TitleFr");
-				dto.TitleNl = reader.GetString("TitleNl");
-				dto.TitleDe = reader.GetString("TitleDe");
-				dto.TitleEn = reader.GetString("TitleEn");
+				dto.RequestorEmail = reader.GetString("RequestorEmail") ?? "";
+				dto.TitleFr = reader.GetString("TitleFr") ?? "";
+				dto.TitleNl = reader.GetString("TitleNl") ?? "";
+				dto.TitleDe = reader.GetString("TitleDe") ?? "";
+				dto.TitleEn = reader.GetString("TitleEn") ?? "";
 				if (!reader.IsDBNull("Cover")) {
 					dto.Cover = DalUtils.ParseStrictByteArray(reader, "Cover");
 				}
@@ -147,6 +147,7 @@ namespace DataAccess.MSSQL {
 			}
 			return publication;
 		}
+		
 
 	}
 

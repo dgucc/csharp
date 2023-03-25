@@ -47,6 +47,12 @@ SET
 WHERE
     Id = @Id
 
+-- Update Publication.Cover if Thumbnail <> NULL
+IF NOT(@Thumbnail IS NULL) AND @DocumentType = 'Report' 
+BEGIN 
+	EXEC [dbo].[usp_Publication_update] @Id = @PublicationId, @Cover = @Thumbnail
+END
+
 SELECT @Id 
     
 COMMIT TRANSACTION;
