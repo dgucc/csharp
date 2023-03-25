@@ -13,7 +13,12 @@ csproj :
 ## **DataAccess.Mock**  
 csproj :  
 >	`<PackageReference Include="Csla" Version="6.2.2" />`  
-> PublicationDal.cs `:IPublicationDal`  
+> PublicationDal.cs `implements IPublicationDal`  
+
+## **DataAccess.MSSQL**  
+csproj :  
+>	`<PackageReference Include="Csla" Version="6.2.2" />`  
+> PublicationDal.cs `implements IPublicationDal`  
 
 ## **Shared**  
 csproj :  
