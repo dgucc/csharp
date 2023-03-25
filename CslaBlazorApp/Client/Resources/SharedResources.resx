@@ -121,7 +121,7 @@
     <value>Add Publication</value>
   </data>
   <data name="Publication.Edit.ApprovalDate" xml:space="preserve">
-    <value>Approval date</value>
+    <value>Approval</value>
   </data>
   <data name="Publication.Edit.btn.Back" xml:space="preserve">
     <value>Back to list</value>
@@ -129,11 +129,14 @@
   <data name="Publication.Edit.btn.Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="Publication.Edit.NoCover" xml:space="preserve">
+    <value>&lt;No Cover&gt;</value>
+  </data>
   <data name="Publication.Edit.PublishDate" xml:space="preserve">
-    <value>Publication date</value>
+    <value>Publication</value>
   </data>
   <data name="Publication.Edit.RequestorEmail" xml:space="preserve">
-    <value>Email</value>
+    <value>Requestor</value>
   </data>
   <data name="Publication.Edit.Title" xml:space="preserve">
     <value>Edit Publication</value>

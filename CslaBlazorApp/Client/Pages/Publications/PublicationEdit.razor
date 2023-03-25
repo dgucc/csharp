@@ -11,8 +11,10 @@
 
 <h1>
 	@if (vm.Model != null && vm.Model.IsNew) {
+		<i class="fa fa-pencil" aria-hidden="true"></i>
 		<span>@Localize["Publication.Add.Title"]</span>
 	} else {
+		<i class="fa fa-pencil" aria-hidden="true"></i>
 		<span>@Localize["Publication.Edit.Title"]</span>
 	}
 </h1>
@@ -24,6 +26,7 @@
 	<p>Loading Publication...</p>
 } else {
 	<p>
+		<i class="fa fa-caret-left" aria-hidden="true"></i>
 		<a href="publications">@Localize["Publication.Edit.btn.Back"]</a>
 	</p>
 	<EditForm Model="@vm.Model">
@@ -47,30 +50,46 @@
 				</tr>
 				<!-- Cover-->
 				<tr>
-					<td>@Localize["Publication.th.Cover"]</td>
+					<td>
+						<i class="fa fa-file-image-o" aria-hidden="true"></i>&nbsp;@Localize["Publication.th.Cover"]
+					</td>
 					<td>
 						@if (@vm.Model.Cover != null) {
 							<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@vm.Model.Cover)) height="150px"/>
-					}					
+						} else {
+							<span class="fa-stack fa-lg">
+								<i class="fa fa-camera fa-stack-1x"></i>
+								<i class="fa fa-ban fa-stack-2x text-danger"></i>
+							</span>
+						}
 					</td>
 				</tr>
 				<!-- ApprovalDate-->
 				<tr>
-					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.ApprovalDate).FriendlyName)]</td>
+					<td>
+						<i class="fa fa-calendar-o" aria-hidden="true"></i>
+						@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.ApprovalDate).FriendlyName)]
+					</td>
 					<td>
 						<DateInput Property="@(vm.GetPropertyInfo(() => vm.Model.ApprovalDate))" EmptyIsMin="true" />
 					</td>
 				</tr>
 				<!-- PublishDate-->
 				<tr>
-					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.PublishDate).FriendlyName)]</td>
+					<td>
+						<i class="fa fa-calendar-o" aria-hidden="true"></i>
+						@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.PublishDate).FriendlyName)]
+					</td>
 					<td>
 						<DateTimePicker Property="@(vm.GetPropertyInfo(() => vm.Model.PublishDate))" @bind-DateAndTime="@vm.Model.PublishDate" UseNative="@false" IsDisabled="@false" />
 					</td>
 				</tr>
 				<!-- RequestorEmail-->
 				<tr>
-					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.RequestorEmail).FriendlyName)]</td>
+					<td>
+						<i class="fa fa-at" aria-hidden="true"></i>
+						@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.RequestorEmail).FriendlyName)]
+					</td>
 					<td>
 						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.RequestorEmail))" />
 					</td>
@@ -105,7 +124,9 @@
 				</tr>
 				<!-- PDFs-->
 				<tr>
-					<td>PDF</td>
+					<td>
+						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+					</td>
 					<td>
 						<div class="flex-column">
 							<div class="flex-item"></div>
@@ -113,7 +134,9 @@
 						</div>
 					</td>
 					<td>
-						<button class="btn btn-outline-secondary" @onclick="OpenModal">@Localize["Publication.Edit.Upload.Modal.btn.Show"]</button>
+						<button class="btn btn-outline-secondary" @onclick="OpenModal">
+							<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.Modal.btn.Show"]
+						</button>
 
 						<!-- Modal Dialog -->
 						<ModalDialog Title=@Localize["Publication.Edit.Upload.PDF.Title"] IsOpened="@isOpened">
@@ -133,30 +156,51 @@
 			<tfooter>
 				<tr>
 					<td>Is New ?</td>
-					<td>@vm.Model.IsNew</td>
+					<td>
+						@if (vm.Model.IsNew) {
+							<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+						} else {
+							<i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
+						}
+					</td>
 				</tr>
 				<tr>
 					<td>Is Modified ?</td>
-					<td>@vm.Model.IsDirty</td>
+					<td>
+						@if (vm.Model.IsDirty) {
+							<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+						} else {
+							<i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
+						}
+					</td>
 				</tr>
 				<tr>
 					<td>Is Valid ?</td>
 					<td>
 					@if(vm.Model.BrokenRulesCollection.Count() > 0) {
-						<span style="color:red">False</span>
+							<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
 					} else {
-						<span style="color:green">True</span>
+							<i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
 					} 
 					</td>
 				</tr>
 				<tr>
 					<td>Is Savable ?</td>
-					<td>@vm.Model.IsSavable</td>
+					<td>
+						@if(vm.Model.IsSavable){
+							<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+						} else {
+							<i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
+						}
+					</td>
 				</tr>
 
 			</tfooter>
 		</table>
-		<button class="btn btn-primary" @onclick="vm.SaveAsync" disabled="@(!vm.Model.IsSavable)">@Localize["Publication.Edit.btn.Save"]</button>
+		<button class="btn btn-primary" @onclick="vm.SaveAsync" disabled="@(!vm.Model.IsSavable)">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>
+			@Localize["Publication.Edit.btn.Save"]
+		</button>
 	</EditForm>
 }
 

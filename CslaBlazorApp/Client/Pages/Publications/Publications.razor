@@ -35,6 +35,11 @@
 						<div>
 							@if(item.Cover != null) {
 								<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(item.Cover)) />
+							} else {
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-camera fa-stack-1x"></i>
+									<i class="fa fa-ban fa-stack-2x text-danger"></i>
+								</span>
 							}
 						</div>
 					</td>
