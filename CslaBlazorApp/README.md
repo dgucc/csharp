@@ -139,8 +139,6 @@ Clean up before copying, backuping
 [Templated Components in Blazor WebAssembly - Modal Popup - AK Academy](https://www.youtube.com/watch?v=g3vH-KYmsHQ)  
 [GitHub](https://github.com/aksoftware98/blazor-modal-popup)  
 
-
-
 [working DateTimePicker](https://github.com/pekspro/BlazorTimePicker)  
 
 [How do I use jQuery UI components in a Blazor application?](https://www.syncfusion.com/faq/blazor/general/how-do-i-use-jquery-ui-components-in-a-blazor-application)  
@@ -151,4 +149,6 @@ Clean up before copying, backuping
 
 [Log4net](https://stackify.com/log4net-guide-dotnet-logging/)  
 
+[font-awesome Cheat list](https://fontawesome.com/v4/icons/)  
+[Download font-awesome-4.7.0](https://src.fedoraproject.org/lookaside/extras/fontawesome-fonts/font-awesome-4.7.0.zip/4d7d73ec30555f5351db74f6cfebe91e/)  
 
