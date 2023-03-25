@@ -1,5 +1,11 @@
 # CSLA.NET Blazor Training
 
+## To Execute in vscode (in Terminal)
+`$ dotnet build`  
+`$ dotnet run --project Server`  
+In Browser : https://localhost:7001/Publications  
+
+
 ## CSLA 6.2.2 PackageReferences 
 `grep -R -i "csla.*version=" --include \*.csproj `  
 

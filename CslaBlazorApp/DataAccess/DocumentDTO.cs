@@ -24,7 +24,7 @@ namespace DataAccess {
         [StringLength(255)]
         public string? UploadedBy { get; set; }
 
-        public byte[] File { get; set; }
+        public byte[]? File { get; set; }
 
         public EnumDocumentType? DocumentType { get; set; }
         public EnumLanguageCode? Language { get; set; }

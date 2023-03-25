@@ -8,7 +8,7 @@
 }
 
 .blazor-modal-content {
-    width: 650px;
+    width: 500px;
     margin: auto;
     margin-top: 150px;
     background-color: white;
@@ -67,4 +67,15 @@
 .blazor-modal-footer {
     background-color: purple;
     padding: 10px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+ }
+
+.flex-item {
+    margin: 10px;
 }
