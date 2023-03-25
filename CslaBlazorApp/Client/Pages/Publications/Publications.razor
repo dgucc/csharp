@@ -14,9 +14,9 @@
 	<p>Loading List...</p>
 } else {
 	<p>
-		<a href="Publications/Add" class="btn btn-outline-primary">@Localize["Publications.btn.Add"]</a>
+		<a href="Publications/Add" class="btn btn-outline-primary"><i class="fa fa-plus"></i>&nbsp; @Localize["Publications.btn.Add"]</a>
 	</p>
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>@Localize["Publications.th.Id"]</th>
@@ -34,7 +34,7 @@
 					<td>
 						<div>
 							@if(item.Cover != null) {
-								<img class="cover" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(item.Cover)) />
+								<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(item.Cover)) />
 							}
 						</div>
 					</td>
@@ -51,8 +51,13 @@
 						</div>
 					</td>
 					<td>
-						<a href="Publications/Edit/@item.Id" class="btn btn-outline-primary">@Localize["Publications.btn.Edit"]</a>&nbsp;
-						<a href="javascript: void(0);" class="btn btn-danger" @onclick="() => Delete(item.Id)">@Localize["Publications.btn.Delete"]</a>
+						
+						<a href="Publications/Edit/@item.Id" >
+							<button class="btn btn-outline-primary" ><i class="fa fa-edit"></i></button>
+						</a>
+						<button class="btn btn-danger" @onclick="() => Delete(item.Id)">
+							<i class="fa fa-trash"></i>
+						</button>
 					</td>
 				</tr>
 			}

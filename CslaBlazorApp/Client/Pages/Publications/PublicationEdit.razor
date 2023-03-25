@@ -31,7 +31,7 @@
 		<ValidationSummary>
 			@vm.ViewModelErrorText
 		</ValidationSummary>
-		<table class="table">
+		<table class="table table-borderless">
 			<thead>
 				<tr>
 					<th></th>
@@ -49,7 +49,7 @@
 					<td>@Localize["Publication.th.Cover"]</td>
 					<td>
 						@if (@vm.Model.Cover != null) {
-							<img class="cover" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@vm.Model.Cover)) height="150px"/>
+							<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@vm.Model.Cover)) height="150px"/>
 					}					
 					</td>
 				</tr>
