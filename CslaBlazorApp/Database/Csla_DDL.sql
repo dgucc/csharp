@@ -44,10 +44,7 @@ CREATE TABLE [dbo].[Publication](
 	[File] [varbinary](max) NULL,
 	[Thumbnail] [varbinary](max) NULL,
 	[DocumentType] [nvarchar](100) NULL,
-	[IsFR] [bit] NULL,
-	[IsNL] [bit] NULL,
-	[IsDE] [bit] NULL,
-	[IsEN] [bit] NULL,
+	[Language] [nvarchar](20) NULL,
 	[PublicationId] [int] NULL,
  CONSTRAINT [PK_Document] PRIMARY KEY CLUSTERED ([Id])
  )

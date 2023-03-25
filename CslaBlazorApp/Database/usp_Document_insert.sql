@@ -15,10 +15,7 @@ CREATE OR ALTER PROCEDURE [dbo].[usp_Document_insert] (
     @File AS varbinary(max) = Null,
     @Thumbnail AS varbinary(max) = Null,
     @DocumentType AS nvarchar(100) = Null,
-    @IsFR AS bit = 0,
-    @IsNL AS bit = 0,
-    @IsDE AS bit = 0,
-    @IsEN AS bit = 0,
+    @Language AS nvarchar(20) = Null,
     @PublicationId AS int = Null
 ) AS -- Author: CCREK\GucciardiD  
 -- Created: 16 Mar 2023  
@@ -39,10 +36,7 @@ INSERT
         [File],
         Thumbnail,
         DocumentType,
-        IsFR,
-        IsNL,
-        IsDE,
-        IsEN,
+        Language,
         PublicationId
     ) VALUES (
         @FileName,
@@ -54,10 +48,7 @@ INSERT
         @File,
         @Thumbnail,
         @DocumentType,
-        @IsFR,
-        @IsNL,
-        @IsDE,
-        @IsEN,
+        @Language,
         @PublicationId
     ) 
 

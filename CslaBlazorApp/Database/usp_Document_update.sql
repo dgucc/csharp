@@ -9,7 +9,7 @@ IF EXISTS (
 ) DROP PROCEDURE [dbo].[usp_Document_update]
 GO
 
-CREATE PROC [dbo].[usp_Document_update] (
+CREATE OR ALTER PROC [dbo].[usp_Document_update] (
     @Id AS int,
     @FileName AS nvarchar(255) = NULL,
     @MimeType AS nvarchar(100) = NULL,
@@ -20,10 +20,7 @@ CREATE PROC [dbo].[usp_Document_update] (
     @File AS varbinary(max) = NULL,
     @Thumbnail AS varbinary(max) = NULL,
     @DocumentType AS nvarchar(100) = NULL,
-    @IsFR AS bit = NULL,
-    @IsNL AS bit = NULL,
-    @IsDE AS bit = NULL,
-    @IsEN AS bit = NULL,
+    @Language AS nvarchar(20) = Null,
     @PublicationId AS int = NULL
 ) AS -- Author: Auto 
     -- Created: 16 Mar 2023 
@@ -45,10 +42,7 @@ SET
     [File] = coalesce(@File, [File]),
     Thumbnail = coalesce(@Thumbnail, Thumbnail),
     DocumentType = coalesce(@DocumentType, DocumentType),
-    IsFR = coalesce(@IsFR, IsFR),
-    IsNL = coalesce(@IsNL, IsNL),
-    IsDE = coalesce(@IsDE, IsDE),
-    IsEN = coalesce(@IsEN, IsEN),
+    @Language = coalesce(@@Language, @Language),
     PublicationId = coalesce(@PublicationId, PublicationId)
 WHERE
     Id = @Id
