@@ -30,6 +30,14 @@ App_Data/
 
 [Install Visual Studio Code and .NET Core for C# coding on Linux](https://www.pragmaticlinux.com/2021/03/install-visual-studio-code-and-net-core-for-c-coding-on-linux/)  
 
+Install the .NET SDK package repository   
+`$ wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb`  
+`$ sudo dpkg -i packages-microsoft-prod.deb` 
+
+Install .NET SDK   
+`$ sudo apt-get update`   
+`$ sudo apt-get install dotnet-sdk-5.0`   
+
 [Setup, Build and Run Blazor WASM App on Linux](https://www.prowaretech.com/articles/current/information-technology/linux/setup-and-configure/build-and-run-blazor-wasm-apps)
 
 [3 Ways to install Visual studio code in Ubuntu using terminal](https://www.how2shout.com/linux/3-ways-install-visual-studio-code-in-ubuntu-using-terminal/)  
