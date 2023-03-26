@@ -19,20 +19,15 @@
     overflow: hidden;
 }
 
+@keyframes show-animation {
+    from { opacity: 0 }
+    to { opacity: 1}
+}
+
 .show {
     display: block;
     animation-name: show-animation;
-    animation-duration: 1s;
-}
-
-@keyframes show-animation {
-    from {
-        opacity: 0
-    }
-
-    to {
-        opacity: 1
-    }
+    animation-duration: 1.5s;
 }
 
 .hide {
@@ -56,9 +51,9 @@
     cursor: pointer;
 }
 
-    .blazor-modal-close-button:hover {
-        color: red;
-    }
+.blazor-modal-close-button:hover {
+    color: red;
+}
 
 .blazor-modal-body {
     padding: 10px;

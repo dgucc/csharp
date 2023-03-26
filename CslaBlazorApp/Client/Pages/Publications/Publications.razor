@@ -67,7 +67,8 @@
 						</button>
 
 						<!-- Modal Dialog -->
-						<ModalDialog Title=@Localize["Publications.Edit.Delete.Title"] IsOpened="@isOpened">
+						
+						<ModalDialog Title=@Localize["Publications.Edit.Delete.Title"] IsOpened="isOpened">
 							<ModalBody>								
 								<h4>@Localize["Publications.Edit.Delete.Confirmation"]</h4>
 								<div class="flex-container ">
@@ -87,6 +88,7 @@
 								<button class="btn btn-light " @onclick="() => isOpened = false">@Localize["Publication.Edit.Delete.Modal.btn.Close"]</button>
 							</ModalFooter>
 						</ModalDialog>
+						
 					</td>
 				</tr>
 			}
@@ -110,7 +112,7 @@
 	
 
 	// Modal Dialog
-	private bool isOpened = false;
+	private bool isOpened {get; set;} = false;
 
 	void OpenModal() {
 		isOpened = true;
