@@ -5,6 +5,7 @@
 @inject Csla.IDataPortal<Publication> publicationEditPortal
 @inject Csla.Blazor.ViewModel<CslaBlazorApp.Shared.Publications> vm
 @inject IStringLocalizer<SharedResources> Localize
+@inject IJSRuntime JSRuntime
 
 <h1>@Localize["Publications.Title"]</h1>
 
@@ -56,13 +57,36 @@
 						</div>
 					</td>
 					<td>
-						
+						<!-- Edit -->
 						<a href="Publications/Edit/@item.Id" >
 							<button class="btn btn-outline-primary" ><i class="fa fa-edit"></i></button>
 						</a>
-						<button class="btn btn-danger" @onclick="() => Delete(item.Id)">
+						<!-- Delete -->
+						<button class="btn btn-danger" @onclick="OpenModal" >
 							<i class="fa fa-trash"></i>
 						</button>
+
+						<!-- Modal Dialog -->
+						<ModalDialog Title=@Localize["Publications.Edit.Delete.Title"] IsOpened="@isOpened">
+							<ModalBody>								
+								<h4>@Localize["Publications.Edit.Delete.Confirmation"]</h4>
+								<div class="flex-container ">
+									<div class="flex-item">
+										<button class="btn btn-primary" @onclick="() => Delete(item.Id)">
+											<i class="fa fa-check" aria-hidden="true"></i>&nbsp;Yes
+										</button>
+									</div>
+									<div class="flex-item">
+										<button class="btn btn-secondary" @onclick="() => isOpened = false">
+											<i class="fa fa-times" aria-hidden="true"></i>&nbsp;No
+										</button>
+									</div>
+								</div>
+							</ModalBody>
+							<ModalFooter>
+								<button class="btn btn-light " @onclick="() => isOpened = false">@Localize["Publication.Edit.Delete.Modal.btn.Close"]</button>
+							</ModalFooter>
+						</ModalDialog>
 					</td>
 				</tr>
 			}
@@ -77,9 +101,20 @@
 	}
 
 	private async void Delete(int id) {
+		isOpened = false;
 		vm.Model = null;
 		await publicationEditPortal.DeleteAsync(id);
 		await vm.RefreshAsync(() => publicationListPortal.FetchAsync());
 		StateHasChanged();
 	}
+	
+
+	// Modal Dialog
+	private bool isOpened = false;
+
+	void OpenModal() {
+		isOpened = true;
+	}
+
+
 }

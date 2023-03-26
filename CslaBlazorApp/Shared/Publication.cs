@@ -168,6 +168,8 @@ namespace CslaBlazorApp.Shared {
 		[Create]
 		private void Create() {
 			Id = -1;
+			ApprovalDate = DateTime.Today;
+			PublishDate = DateTime.Now;
 			_log.Info("[PORTAL] Create()");
 			base.Child_Create();
 		}
