@@ -36,7 +36,8 @@ Install the .NET SDK package repository
 
 Install .NET SDK   
 `$ sudo apt-get update`   
-`$ sudo apt-get install dotnet-sdk-5.0`   
+`$ sudo apt-get install dotnet-sdk-5.0`  
+`$ dotnet --list-sdks`  
 
 [Setup, Build and Run Blazor WASM App on Linux](https://www.prowaretech.com/articles/current/information-technology/linux/setup-and-configure/build-and-run-blazor-wasm-apps)
 
