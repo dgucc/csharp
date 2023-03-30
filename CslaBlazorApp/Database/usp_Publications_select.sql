@@ -26,7 +26,7 @@ SELECT
     [TitleEn],
     [Cover]
 FROM
-    [dbo].[Publication]
+    [dbo].[Publication] WITH (UPDLOCK)
 
 RETURN
 GO

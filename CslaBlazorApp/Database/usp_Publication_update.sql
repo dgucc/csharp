@@ -29,7 +29,7 @@ BEGIN TRY
 
 -- update 
 UPDATE
-    [dbo].[Publication]
+    [dbo].[Publication] WITH (ROWLOCK)
 SET
     LegislativeLevel = coalesce(@LegislativeLevel, LegislativeLevel),
     PublicationType = coalesce(@PublicationType, PublicationType),

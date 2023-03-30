@@ -36,7 +36,7 @@ INSERT
         [File],
         Thumbnail,
         DocumentType,
-        Language,
+        [Language],
         PublicationId
     ) VALUES (
         @FileName,

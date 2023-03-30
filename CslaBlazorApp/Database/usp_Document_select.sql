@@ -27,6 +27,6 @@ SELECT
     [Language],
     [PublicationId]
 FROM
-    [dbo].[Document]
+    [dbo].[Document] WITH (UPDLOCK)
 WHERE
     [Id] = @Id RETURN

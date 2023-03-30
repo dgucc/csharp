@@ -6,25 +6,20 @@ IF EXISTS (
     FROM
         sys.objects
     WHERE
-        object_id = OBJECT_ID(N'[dbo].[usp_Publication_delete]')
+        object_id = OBJECT_ID(N'[dbo].[usp_Document_delete]')
         AND TYPE IN (N'P', N'PC')
-) DROP PROCEDURE [dbo].[usp_Publication_delete] 
+) DROP PROCEDURE [dbo].[usp_Document_delete] 
 GO
 
-CREATE PROC [dbo].[usp_Publication_delete] (@Id AS int) AS 
+CREATE PROCEDURE [dbo].[usp_Document_delete] (@Id AS int) AS 
 -- Author: Auto
--- Created: 20 Mar 2023
--- Function: DELETE a Publication an all related records
+-- Created: 29 Mar 2023
+-- Function: DELETE a Document
 -- Modifications:
 BEGIN TRANSACTION 
 BEGIN TRY 
 
--- Cascading deletions
-DELETE [dbo].[Document] WITH (ROWLOCK) WHERE PublicationId = @Id
-
-DELETE [dbo].[PublicationTopic] WITH (ROWLOCK) WHERE PublicationId = @Id
-
-DELETE [dbo].[Publication] WITH (ROWLOCK) WHERE Id = @Id 
+DELETE [dbo].[Document] WITH (ROWLOCK) WHERE Id = @Id
 
 COMMIT TRANSACTION
 END TRY

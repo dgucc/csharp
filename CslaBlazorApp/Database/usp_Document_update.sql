@@ -1,3 +1,5 @@
+USE [Csla]
+GO
 IF EXISTS (
     SELECT
         *
@@ -9,7 +11,7 @@ IF EXISTS (
 ) DROP PROCEDURE [dbo].[usp_Document_update]
 GO
 
-CREATE OR ALTER PROC [dbo].[usp_Document_update] (
+CREATE PROCEDURE [dbo].[usp_Document_update] (
     @Id AS int,
     @FileName AS nvarchar(255) = NULL,
     @MimeType AS nvarchar(100) = NULL,
@@ -20,7 +22,7 @@ CREATE OR ALTER PROC [dbo].[usp_Document_update] (
     @File AS varbinary(max) = NULL,
     @Thumbnail AS varbinary(max) = NULL,
     @DocumentType AS nvarchar(100) = NULL,
-    @Language AS nvarchar(20) = Null,
+    @Language AS nvarchar(25) = NULL,
     @PublicationId AS int = NULL
 ) AS -- Author: Auto 
     -- Created: 16 Mar 2023 
@@ -31,7 +33,7 @@ BEGIN TRY
 
 -- update 
 UPDATE
-    [dbo].[Document]
+    [dbo].[Document] WITH (ROWLOCK)
 SET
     FileName = coalesce(@FileName, FileName),
     MimeType = coalesce(@MimeType, MimeType),
@@ -42,7 +44,7 @@ SET
     [File] = coalesce(@File, [File]),
     Thumbnail = coalesce(@Thumbnail, Thumbnail),
     DocumentType = coalesce(@DocumentType, DocumentType),
-    @Language = coalesce(@@Language, @Language),
+    [Language] = coalesce(@Language, [Language]),
     PublicationId = coalesce(@PublicationId, PublicationId)
 WHERE
     Id = @Id

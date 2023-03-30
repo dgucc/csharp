@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[Publication](
 	[LegislativeLevel] [nvarchar](255) NULL,
 	[PublicationType] [nvarchar](255) NULL,
 	[ApprovedBy] [nvarchar](255) NULL,
-	[ApprovalDate] [datetime] NULL,
+	[ApprovalDate] [smalldatetime] NULL,
 	[PublishDate] [datetime] NULL,
 	[RequestorEmail] [nvarchar](255) NULL,
 	[TitleNl] [nvarchar](255) NULL,
@@ -30,7 +30,7 @@ CREATE TABLE [dbo].[Publication](
 	[HeaderEn] [nvarchar](max) NULL,
 	[Cover] [varbinary](max) NULL,
  CONSTRAINT [PK_Publication] PRIMARY KEY CLUSTERED ([Id])
- )
+ ) --WITH (ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
  GO
  
  CREATE TABLE [dbo].[Document](
@@ -44,10 +44,10 @@ CREATE TABLE [dbo].[Publication](
 	[File] [varbinary](max) NULL,
 	[Thumbnail] [varbinary](max) NULL,
 	[DocumentType] [nvarchar](100) NULL,
-	[Language] [nvarchar](20) NULL,
+	[Language] [nvarchar](100) NULL,
 	[PublicationId] [int] NULL,
  CONSTRAINT [PK_Document] PRIMARY KEY CLUSTERED ([Id])
- )
+ ) --WITH (ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
  GO
  
  CREATE TABLE [dbo].[PublicationTopic](
@@ -62,6 +62,5 @@ ALTER TABLE [dbo].[Document]  WITH CHECK ADD  CONSTRAINT [FK_Document_Publicatio
 REFERENCES [dbo].[Publication] ([Id])
 GO
 
-ALTER TABLE [dbo].[PublicationTopic]  WITH CHECK ADD  CONSTRAINT [FK_PublicationTopic_PublicationID] FOREIGN KEY([PublicationId])
-REFERENCES [dbo].[Publication] ([Id])
+CREATE NONCLUSTERED INDEX [IX_Document_PublicationId] ON [dbo].[Document] ([PublicationId]) INCLUDE ([DocumentType],[Language])
 GO
