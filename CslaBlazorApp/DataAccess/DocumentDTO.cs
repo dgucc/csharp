@@ -16,7 +16,7 @@ namespace DataAccess {
         [MaxLength(10)]
         public string? Extension { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime?  CreatedOn { get; set; }
 
         [MaxLength(255)]
         public string? Description { get; set; }
@@ -26,7 +26,9 @@ namespace DataAccess {
 
         public byte[]? File { get; set; }
 
-        public EnumDocumentType? DocumentType { get; set; }
+		public byte[]? Thumbnail { get; set; }
+
+		public EnumDocumentType? DocumentType { get; set; }
         public EnumLanguageCode? Language { get; set; }
 
         public int PublicationId { get; set; }

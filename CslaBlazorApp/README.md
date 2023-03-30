@@ -130,6 +130,16 @@ Clean up before copying, backuping
 `$ find . -type d -name bin -exec rm -rf "{}" +`  
 `$ find . -type d -name obj -exec rm -rf "{}" +`  
 
+How to start|stop SQL Express :  
+
+> SqlLocalDB.exe start [instance]     
+> SqlLocalDB.exe stop [instance] [-i nowait|-k kill]`   
+
+```cmd
+"C:\Program Files\Microsoft SQL Server\150\Tools\Binn\SqlLocalDB.exe" stop "MSSQLLocalDB" -k   
+"C:\Program Files\Microsoft SQL Server\150\Tools\Binn\SqlLocalDB.exe" stop "MSSQLLocalDB" -i   
+"C:\Program Files\Microsoft SQL Server\150\Tools\Binn\SqlLocalDB.exe" start "MSSQLLocalDB"   
+```
 
 ---
 ## References
@@ -151,4 +161,10 @@ Clean up before copying, backuping
 
 [font-awesome Cheat list](https://fontawesome.com/v4/icons/)  
 [Download font-awesome-4.7.0](https://src.fedoraproject.org/lookaside/extras/fontawesome-fonts/font-awesome-4.7.0.zip/4d7d73ec30555f5351db74f6cfebe91e/)  
+
+
+SQLServer Locking [TO TEST]  
+[SQL Server UPDATE lock and UPDLOCK Table Hints](https://www.mssqltips.com/sqlservertip/6290/sql-server-update-lock-and-updlock-table-hints/)    
+[SQL Server Locking, Blocking, And Deadlocks](https://www.bps-corp.com/post/sql-server-locking-and-blocking)      
+[Introduction to Locking in SQL Server](https://www.sqlteam.com/articles/introduction-to-locking-in-sql-server)   
 

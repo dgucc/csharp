@@ -88,7 +88,15 @@ namespace CslaBlazorApp.Shared {
 			get { return GetProperty(CoverProperty); }
 			set { SetProperty(CoverProperty, value); }
 		}
-		//public byte[] Cover { get; set; }
+
+		// Documents
+		public static readonly PropertyInfo<DocumentList> DocumentsProperty = RegisterProperty<DocumentList>(nameof(Documents), RelationshipTypes.LazyLoad);
+		public DocumentList Documents {
+			get => LazyGetProperty(DocumentsProperty, () => ApplicationContext.GetRequiredService<IChildDataPortal<DocumentList>>().CreateChild());
+			set => LoadProperty(DocumentsProperty, value);
+		}
+
+
 		#endregion
 
 		#region Rules
@@ -170,7 +178,7 @@ namespace CslaBlazorApp.Shared {
 			Id = -1;
 			ApprovalDate = DateTime.Today;
 			PublishDate = DateTime.Now;
-			_log.Info("[PORTAL] Create()");
+			_log.Info("[PORTAL] Create(Publication)");
 			base.Child_Create();
 		}
 
@@ -180,7 +188,7 @@ namespace CslaBlazorApp.Shared {
 			using (BypassPropertyChecks)
 
 			Csla.Data.DataMapper.Map(data, this);
-			_log.Info(string.Format("[PORTAL] Fetch(id:{0})",id));
+			_log.Info(string.Format("[PORTAL] Fetch(Publication id:{0})",id));
 			BusinessRules.CheckRules();
 		}
 
@@ -195,12 +203,12 @@ namespace CslaBlazorApp.Shared {
 			TitleDe = data.TitleDe;
 			TitleEn = data.TitleEn;
 			Cover = data.Cover;
-			_log.Info("[PORTAL] FetchChild()");
+			_log.Info("[PORTAL] FetchChild(Publication)");
 		}
 
 		[Insert]
 		private void Insert([Inject] DataAccess.IPublicationDal dal) {
-			_log.Info("[PORTAL] Insert()");
+			_log.Info("[PORTAL] Insert(Publication)");
 			using (BypassPropertyChecks) {
 				var data = new DataAccess.PublicationDTO {
 					ApprovalDate= ApprovalDate,
@@ -209,7 +217,8 @@ namespace CslaBlazorApp.Shared {
 					TitleFr = TitleFr,
 					TitleNl = TitleNl,
 					TitleDe = TitleDe,
-					TitleEn = TitleEn
+					TitleEn = TitleEn,
+					Cover = Cover
 				};
 				var result = dal.Insert(data);
 				_log.Info(string.Format("Inserted new Publication {0}", result.Id));
@@ -229,7 +238,8 @@ namespace CslaBlazorApp.Shared {
 					TitleFr = TitleFr,
 					TitleNl = TitleNl,
 					TitleDe = TitleDe,
-					TitleEn = TitleEn
+					TitleEn = TitleEn,
+					Cover = Cover
 				};
 				_log.Info(string.Format("Update Publication {0}", Id));
 				dal.Update(data);
@@ -238,13 +248,13 @@ namespace CslaBlazorApp.Shared {
 
 		[DeleteSelf]
 		private void DeleteSelf([Inject] DataAccess.IPublicationDal dal) {
-			_log.Info("[PORTAL] DeleteSelf()");
+			_log.Info("[PORTAL] DeleteSelf(Publication)");
 			Delete(ReadProperty(IdProperty), dal);
 		}
 
 		[Delete]
 		private void Delete(int id, [Inject] DataAccess.IPublicationDal dal) {
-			_log.Info(string.Format("[PORTAL] Delete(id:{0})", id));
+			_log.Info(string.Format("[PORTAL] Delete(Publication id:{0})", id));
 			dal.Delete(id);
 		}
 		#endregion
