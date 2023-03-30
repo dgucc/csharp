@@ -1,11 +1,13 @@
 ﻿@page "/Publications/Add"
 @page "/Publications/Edit/{id}"
 
-@using CslaBlazorApp.Shared
 @using Csla.Blazor
+@using CslaBlazorApp.Shared
 
 @inject Csla.IDataPortal<Publication> publicationEditPortal
+@inject Csla.IDataPortal<DocumentList> documentsPortal
 @inject Csla.Blazor.ViewModel<Publication> vm
+@inject Csla.Blazor.ViewModel<DocumentList> docvm
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<SharedResources> Localize
 
@@ -34,7 +36,7 @@
 		<ValidationSummary>
 			@vm.ViewModelErrorText
 		</ValidationSummary>
-		<table class="table table-borderless">
+		<table class="table table-borderless table-hover">
 			<thead>
 				<tr>
 					<th></th>
@@ -57,7 +59,7 @@
 						@if (@vm.Model.Cover != null) {
 							<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@vm.Model.Cover)) height="150px"/>
 						} else {
-							<span class="fa-stack fa-lg">
+							<span class="fa-stack fa-lg" style="opacity:0.5">
 								<i class="fa fa-camera fa-stack-1x"></i>
 								<i class="fa fa-ban fa-stack-2x text-danger"></i>
 							</span>
@@ -125,12 +127,30 @@
 				<!-- PDFs-->
 				<tr>
 					<td>
+						<span># @docvm.Model?.Count </span>
 						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 					</td>
 					<td>
-						<div class="flex-column">
-							<div class="flex-item"></div>
-							<div class="flex-item"></div>
+						<div class="flex-container">
+						@if (docvm.Model == null) {
+							<p>Loading Documents...</p>
+						} else {
+							foreach (var item in docvm.Model){
+								<div class="flex-item">
+									@if (item.Thumbnail != null) {
+									<figure>
+										<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@item.Thumbnail)) height="150px" alt="PDF"/>
+										<figcaption>@item.DocumentType @item.Language</figcaption>
+									</figure>
+									} else {
+										<span class="fa-stack fa-lg" style="opacity:0.5">
+											<i class="fa fa-camera fa-stack-1x"></i>
+											<i class="fa fa-ban fa-stack-2x text-danger"></i>
+										</span>
+									}
+								</div>
+							}
+						}
 						</div>
 					</td>
 					<td>
@@ -214,10 +234,13 @@
 	}
 
 	protected override async Task OnParametersSetAsync() {
-		if (string.IsNullOrWhiteSpace(id))
+		if (string.IsNullOrWhiteSpace(id)) {
 			await vm.RefreshAsync(() => publicationEditPortal.CreateAsync());
-		else
+			await docvm.RefreshAsync(() => documentsPortal.CreateAsync());
+		} else {
 			await vm.RefreshAsync(() => publicationEditPortal.FetchAsync(int.Parse(id)));
+			await docvm.RefreshAsync(() => documentsPortal.FetchAsync(int.Parse(id)));
+		}
 	}
 
 	// Modal Dialog

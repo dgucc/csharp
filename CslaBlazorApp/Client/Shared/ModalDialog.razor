@@ -2,7 +2,9 @@
     <div class="blazor-modal-content">
         <div class="blazor-modal-header">
             <h5 class="blazor-modal-title">@Title</h5>
-            @* <span class="blazor-modal-close-button" @onclick="closeDialog"><i class="fa fa-times" aria-hidden="true"></i></span> *@
+            @*<span class="blazor-modal-close-button" @onclick="() => IsOpened = false">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>*@
         </div>
         <div class="blazor-modal-body">
             @ModalBody
@@ -26,11 +28,5 @@
     [Parameter]
     public bool IsOpened { get; set; }
 
-    void closeDialog(){
-        IsOpened = false;
-    }
-
     string cssClass => IsOpened ? "show" : "hide";
-    
-
 }

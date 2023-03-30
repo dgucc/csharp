@@ -19,15 +19,15 @@
     overflow: hidden;
 }
 
-@keyframes show-animation {
-    from { opacity: 0 }
-    to { opacity: 1}
+.show {
+    display: block; 
+    animation-name: show-animation; 
+    animation-duration: 1s; 
 }
 
-.show {
-    display: block;
-    animation-name: show-animation;
-    animation-duration: 1.5s;
+@keyframes show-animation {
+    from { opacity: 0 }
+    to {opacity: 1 }
 }
 
 .hide {
@@ -69,7 +69,8 @@
     flex-direction: row;
     justify-content: space-evenly;
     text-align: center;
- }
+    min-width: 0;
+}
 
 .flex-item {
     margin: 10px;
