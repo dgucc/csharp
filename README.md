@@ -41,6 +41,11 @@ Install .NET SDK
 
 [Setup, Build and Run Blazor WASM App on Linux](https://www.prowaretech.com/articles/current/information-technology/linux/setup-and-configure/build-and-run-blazor-wasm-apps)
 
+Build (in same folder as "sln")  
+`$ dotnet build`   
+Run by specifying project
+`$ dotnet run --project Server`   
+
 [3 Ways to install Visual studio code in Ubuntu using terminal](https://www.how2shout.com/linux/3-ways-install-visual-studio-code-in-ubuntu-using-terminal/)  
 
 ```bash
