@@ -133,7 +133,7 @@ Or
 `$ dotnet clean`  
 
 "Failed to bind to address https://127.0.0.1:7001: address already in use"  
-`$ lsof | grep :7001`  
+`$ lsof -i:7001`  
 `$ kill -9 <PID>`  
 
 
