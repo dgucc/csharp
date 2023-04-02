@@ -17,42 +17,42 @@ public class DocumentDal : IDocumentDal {
             PublicationId=1,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.French,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         },
         new DocumentDTO {
             Id=2,
             PublicationId=1,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         },
         new DocumentDTO {
             Id=3,
             PublicationId=2,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.French,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         },
         new DocumentDTO {
             Id=7,
             PublicationId=2,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         },
         new DocumentDTO {
             Id=8,
             PublicationId=3,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         },
         new DocumentDTO {
             Id=9,
             PublicationId=4,
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
-            Thumbnail=File.ReadAllBytes(@"/home/user/workspace/github/csharp/Blazor/CslaBlazorApp/TEMP/cover.jpg")
+            Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
         }
     };
 
@@ -90,6 +90,7 @@ public class DocumentDal : IDocumentDal {
                 old.PublicationId = document.PublicationId;
                 old.DocumentType = document.DocumentType;
                 old.Language = document.Language;
+                old.Thumbnail = document.Thumbnail;
                 return old;
             }
     }

@@ -129,6 +129,13 @@ img:hover {
 Clean up before copying, backuping   
 `$ find . -type d -name bin -exec rm -rf "{}" +`  
 `$ find . -type d -name obj -exec rm -rf "{}" +`  
+Or  
+`$ dotnet clean`  
+
+"Failed to bind to address https://127.0.0.1:7001: address already in use"  
+`$ lsof | grep :7001`  
+`$ kill -9 <PID>`  
+
 
 How to start|stop SQL Express :  
 

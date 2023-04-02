@@ -28,5 +28,11 @@
     <ProjectReference Include="..\Shared\CslaBlazorApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="../TEMP/cover.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
