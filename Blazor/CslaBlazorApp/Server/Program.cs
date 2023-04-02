@@ -29,11 +29,12 @@ builder.Services.AddCsla(o => o
 	.UseLocalProxy()));
 
 // for Mock Db
-//builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAccess.Mock.PublicationDal));
+builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAccess.Mock.PublicationDal));
+builder.Services.AddTransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.Mock.DocumentDal));
 
 // for SQL Server
-builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAccess.MSSQL.PublicationDal));
-builder.Services.AddTransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.MSSQL.DocumentDal));
+// builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAccess.MSSQL.PublicationDal));
+// builder.Services.AddTransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.MSSQL.DocumentDal));
 
 // If using Kestrel:
 builder.Services.Configure<KestrelServerOptions>(options => {
