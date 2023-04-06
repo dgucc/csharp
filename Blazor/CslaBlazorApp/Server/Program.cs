@@ -33,8 +33,8 @@ builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAcc
 builder.Services.AddTransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.Mock.DocumentDal));
 
 // for SQL Server
-// builder.Services.AddTransient(typeof(DataAccess.IPublicationDal), typeof(DataAccess.MSSQL.PublicationDal));
-// builder.Services.AddTransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.MSSQL.DocumentDal));
+//builder.Services.AddTransient(typeof(dataaccess.ipublicationdal), typeof(dataaccess.mssql.publicationdal));
+//builder.services.addtransient(typeof(DataAccess.IDocumentDal), typeof(DataAccess.MSSQL.DocumentDal));
 
 // If using Kestrel:
 builder.Services.Configure<KestrelServerOptions>(options => {

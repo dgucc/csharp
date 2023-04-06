@@ -111,6 +111,7 @@ namespace DataAccess.Mock {
 		};
 		#endregion
 
+		#region CRUD
 		public bool Delete(int id) {
 			Console.WriteLine("[DAL] Delete(id:{0})", id);
 			var publication = _publicationTable.Where(p => p.Id == id).FirstOrDefault();
@@ -178,5 +179,6 @@ namespace DataAccess.Mock {
                 return old;
             }
         }
-    }
+		#endregion
+	}
 }
