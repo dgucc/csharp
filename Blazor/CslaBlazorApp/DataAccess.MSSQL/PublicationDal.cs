@@ -147,7 +147,23 @@ namespace DataAccess.MSSQL {
 			}
 			return publication;
 		}
-		
+
+		public bool UpdateCover(int publicationId, byte[] cover) {
+			conn.Open();
+			using SqlCommand cmd = conn.CreateCommand();
+			cmd.CommandType = System.Data.CommandType.StoredProcedure;
+			cmd.CommandText = "usp_PublicationCover_update";
+			cmd.Parameters.AddWithValue(@"PublicationId", publicationId);
+			cmd.Parameters.AddWithValue(@"Cover", cover);
+
+			try {
+				var result = cmd.ExecuteNonQuery();
+			} catch (Exception ex) {
+				_log.Error(ex.Message);
+				return false;
+			}
+			return true;
+		}
 
 	}
 

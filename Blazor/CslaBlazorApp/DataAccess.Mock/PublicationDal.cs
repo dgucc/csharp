@@ -179,6 +179,19 @@ namespace DataAccess.Mock {
                 return old;
             }
         }
+
+		public bool UpdateCover(int publicationId, byte[] cover) {
+
+            try {
+                var publication = _publicationTable.Where(p => p.Id == publicationId).FirstOrDefault();
+                publication.Cover = cover;
+            } catch (Exception ex) {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+
+			return true;
+		}
 		#endregion
 	}
 }
