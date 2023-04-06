@@ -1,0 +1,3 @@
+convert Publication_01_FR.pdf[0] -quality 95 -resize 50% -background white -alpha remove cover_01_FR.jpg
+
+for pdf in $(ls -1 Publication*.pdf) ; do convert $pdf[0] -quality 90 -resize 50% -background white -alpha remove ${pdf%.pdf}_cover.jpg ; done
