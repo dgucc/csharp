@@ -67,10 +67,8 @@ public class PDFController : ControllerBase {
 				PublicationId = publicationId,
 			};
 
-			var dal = new DataAccess.MSSQL.DocumentDal();
+			var dal = new DataAccess.Mock.DocumentDal(); // Temporarily........................
 			dal.Insert(document);
-
-
 
 		} catch (Exception ex) {
 			_log.Error(ex.Message);
@@ -87,7 +85,9 @@ public class PDFController : ControllerBase {
 
 
 	[HttpPost("upload/cover")]
-	public async Task<IActionResult> UploadCover(IFormFile image, [FromForm] int publicationId) {
+	public async Task<IActionResult> UploadCover(
+			IFormFile image, 
+			[FromForm] int publicationId) {
 
 		if (image == null || image.Length == 0) {
 			return BadRequest("Please upload a file");
@@ -112,7 +112,7 @@ public class PDFController : ControllerBase {
 		}
 
 		try {
-			var dal = new DataAccess.MSSQL.PublicationDal();
+			var dal = new DataAccess.Mock.PublicationDal(); // Temporarily........................
 			dal.UpdateCover(publicationId, imageBytes);
 
 		} catch (Exception ex) {

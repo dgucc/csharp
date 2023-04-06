@@ -7,7 +7,8 @@ string BlazorClientPolicy = "AllowAllOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => {
 	options.AddPolicy(BlazorClientPolicy,
 	  builder => {
@@ -46,9 +47,8 @@ builder.Services.Configure<IISServerOptions>(options => {
 	options.AllowSynchronousIO = true;
 });
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// HttpClient for API calls
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

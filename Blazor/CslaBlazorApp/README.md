@@ -121,6 +121,35 @@ img:hover {
 }
 ```
 
+## API Upload Pdfs
+
+To Add Swagger Component  
+
+CslaBlazorApp.Server.csproj :  
+```xml
+<ItemGroup>
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+</ItemGroup>
+```
+Program.cs :  
+```csharp
+[...]
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+if (app.Environment.IsDevelopment()) {
+	[..]
+	app.UseSwagger();
+	app.UseSwaggerUI();
+}
+```
+
+Define API to upload Pdfs :  
+Server\Controllers\DocumentController.cs
+
+Test with Swagger GUI : https://localhost:7001/swagger/index.html
+API :  https://localhost:7001/api/Document/pdf/upload
+`$ curl -k --location --request POST 'https://localhost:7001/api/Document/pdf/upload' --form 'pdf=@"Publication_04_NL.pdf"' --output acknowledged.pdf`  
+`
 
 
 ---
