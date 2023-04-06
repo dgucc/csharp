@@ -44,7 +44,7 @@ CREATE TABLE [dbo].[Publication](
 	[File] [varbinary](max) NULL,
 	[Thumbnail] [varbinary](max) NULL,
 	[DocumentType] [nvarchar](100) NULL,
-	[Language] [nvarchar](100) NULL,
+	[Language] [nvarchar](25) NULL,
 	[PublicationId] [int] NULL,
  CONSTRAINT [PK_Document] PRIMARY KEY CLUSTERED ([Id])
  ) --WITH (ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

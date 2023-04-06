@@ -10,8 +10,11 @@ IF EXISTS (
         AND TYPE IN (N'P', N'PC')
 ) DROP PROCEDURE [dbo].[usp_Publication_delete] 
 GO
-
-CREATE PROC [dbo].[usp_Publication_delete] (@Id AS int) AS 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[usp_Publication_delete] (@Id AS int) AS 
 -- Author: Auto
 -- Created: 20 Mar 2023
 -- Function: DELETE a Publication an all related records
@@ -42,3 +45,4 @@ RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 ROLLBACK TRANSACTION
 END CATCH;
+GO

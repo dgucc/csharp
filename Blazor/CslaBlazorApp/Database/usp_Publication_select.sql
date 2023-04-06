@@ -1,13 +1,15 @@
 USE [Csla]
 GO
+IF EXISTS (
+SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_Publication_select]') AND type in (N'P', N'PC')
+) DROP PROCEDURE [dbo].[usp_Publication_select]
+GO
 
-SET
-    ANSI_NULLS ON
+SET ANSI_NULLS ON
 GO
-SET
-    QUOTED_IDENTIFIER ON
+SET QUOTED_IDENTIFIER ON
 GO
-CREATE OR ALTER PROCEDURE [dbo].[usp_Publication_select] (@Id AS int) AS 
+CREATE PROCEDURE [dbo].[usp_Publication_select] (@Id AS int) AS 
 
 SET NOCOUNT ON
 -- Author: Auto 

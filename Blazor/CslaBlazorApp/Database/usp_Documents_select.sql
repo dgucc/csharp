@@ -1,12 +1,22 @@
 USE [Csla]
 GO
+IF EXISTS (
+    SELECT
+        *
+    FROM
+        sys.objects
+    WHERE
+        object_id = OBJECT_ID(N'[dbo].[usp_Document_select]')
+        AND TYPE IN (N'P', N'PC')
+) DROP PROCEDURE [dbo].[usp_Document_select] 
+GO
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[usp_Document_select] AS
+CREATE PROCEDURE [dbo].[usp_Document_select] AS
 SET
     NOCOUNT ON 
     -- Author: GucciardiD 
@@ -28,3 +38,4 @@ SELECT
     [PublicationId]
 FROM
     [dbo].[Document] WITH (UPDLOCK)
+GO

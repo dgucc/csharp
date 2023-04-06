@@ -69,3 +69,4 @@ RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 ROLLBACK TRANSACTION
 END CATCH;
+GO

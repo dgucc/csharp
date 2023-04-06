@@ -1,29 +1,34 @@
 USE [Csla]
 GO
+IF EXISTS (
+SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_Document_insert]') AND type in (N'P', N'PC')
+) DROP PROCEDURE [dbo].[usp_Document_insert]
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-CREATE OR ALTER PROCEDURE [dbo].[usp_Document_insert] (
-    @FileName AS nvarchar(255) = Null,
-    @MimeType AS nvarchar(100) = Null,
-    @Extension AS nvarchar(10) = Null,
-    @CreatedOn AS datetime = Null,
-    @Description AS nvarchar(255) = Null,
-    @UploadedByUser AS nvarchar(255) = Null,
-    @File AS varbinary(max) = Null,
-    @Thumbnail AS varbinary(max) = Null,
-    @DocumentType AS nvarchar(100) = Null,
-    @Language AS nvarchar(20) = Null,
-    @PublicationId AS int = Null
-) AS -- Author: CCREK\GucciardiD  
--- Created: 16 Mar 2023  
--- Function: Inserts a dbo.Document table record      
--- Modifications:     
+CREATE PROCEDURE [dbo].[usp_Document_insert] (
+        @FileName AS nvarchar(255) = NULL,
+        @MimeType AS nvarchar(100) = NULL,
+        @Extension AS nvarchar(10) = NULL,
+        @CreatedOn AS datetime = NULL,
+        @Description AS nvarchar(255) = NULL,
+        @UploadedByUser AS nvarchar(255) = NULL,
+        @File AS varbinary(max) = NULL,
+        @Thumbnail AS varbinary(max) = NULL,
+        @DocumentType AS nvarchar(100) = NULL,
+        @Language AS nvarchar(25) = NULL,
+        @PublicationId AS int = NULL
+    ) AS 
+    -- Author: CCREK\GucciardiD  
+    -- Created: 16 Mar 2023  
+    -- Function: Inserts a dbo.Document table record      
+    -- Modifications:     
 BEGIN TRANSACTION 
-BEGIN TRY 
 
+BEGIN TRY 
 -- insert  
 INSERT
     [dbo].[Document] (
@@ -42,9 +47,9 @@ INSERT
         @FileName,
         @MimeType,
         @Extension,
-        (SELECT CURRENT_TIMESTAMP),--@CreatedOn,
+        (SELECT CURRENT_TIMESTAMP), --@CreatedOn,
         @Description,
-        (SELECT SUSER_NAME()),--@UploadedByUser,		
+        (SELECT SUSER_NAME()), --@UploadedByUser,		
         @File,
         @Thumbnail,
         @DocumentType,

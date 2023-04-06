@@ -1,13 +1,15 @@
 USE [Csla]
 GO
+IF EXISTS (
+SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_Publication_insert]') AND type in (N'P', N'PC')
+) DROP PROCEDURE [dbo].[usp_Publication_insert]
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
--- usp_Publication_insert
-
-CREATE OR ALTER PROCEDURE [dbo].[usp_Publication_insert] (
+CREATE PROCEDURE [dbo].[usp_Publication_insert] (
         @LegislativeLevel AS nvarchar(255) = Null,
     @PublicationType AS nvarchar(255) = Null,
     @ApprovedBy AS nvarchar(255) = Null,
@@ -87,3 +89,4 @@ RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 ROLLBACK TRANSACTION
 END CATCH;
+GO

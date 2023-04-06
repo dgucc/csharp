@@ -24,7 +24,7 @@ CREATE PROCEDURE [dbo].[usp_Document_update] (
     @DocumentType AS nvarchar(100) = NULL,
     @Language AS nvarchar(25) = NULL,
     @PublicationId AS int = NULL
-) AS -- Author: Auto 
+) AS -- Author: GucciardiD
     -- Created: 16 Mar 2023 
     -- Function: Create or update a dbo.Document table record  
     -- Modifications:  

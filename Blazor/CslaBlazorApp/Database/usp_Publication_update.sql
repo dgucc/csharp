@@ -1,6 +1,12 @@
+USE [Csla]
+GO
 IF EXISTS (
 SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_Publication_update]') AND type in (N'P', N'PC')
 ) DROP PROCEDURE [dbo].[usp_Publication_update]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[usp_Publication_update] (
@@ -69,3 +75,4 @@ RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 ROLLBACK TRANSACTION
 END CATCH;
+GO

@@ -1,5 +1,15 @@
 USE [Csla]
 GO
+IF EXISTS (
+    SELECT
+        *
+    FROM
+        sys.objects
+    WHERE
+        object_id = OBJECT_ID(N'[dbo].[usp_DocumentsByPublicationId_select]')
+        AND TYPE IN (N'P', N'PC')
+) DROP PROCEDURE [dbo].[usp_DocumentsByPublicationId_select] 
+GO
 SET
     ANSI_NULLS ON
 GO
@@ -31,3 +41,4 @@ FROM
 WHERE
     [PublicationId] = @PublicationId
 RETURN
+GO
