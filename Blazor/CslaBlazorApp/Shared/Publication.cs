@@ -186,8 +186,8 @@ namespace CslaBlazorApp.Shared {
 		private void Fetch(int id, [Inject] DataAccess.IPublicationDal dal) {
 			var data = dal.Get(id);
 			using (BypassPropertyChecks)
-
 			Csla.Data.DataMapper.Map(data, this);
+
 			_log.Info(string.Format("[PORTAL] Fetch(Publication id:{0})",id));
 			BusinessRules.CheckRules();
 		}

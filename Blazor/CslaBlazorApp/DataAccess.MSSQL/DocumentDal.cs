@@ -183,7 +183,7 @@ namespace DataAccess.MSSQL {
 			cmd.Parameters.AddWithValue(@"Extension", document.Extension);
 			cmd.Parameters.AddWithValue(@"CreatedOn", document.CreatedOn);
 			cmd.Parameters.AddWithValue(@"Description", document.Description);
-			cmd.Parameters.AddWithValue(@"UploadedBy", document.UploadedBy);
+			cmd.Parameters.AddWithValue(@"UploadedByUser", document.UploadedBy);
 			cmd.Parameters.AddWithValue(@"DocumentType", document.DocumentType.ToString());
 			cmd.Parameters.AddWithValue(@"Language", document.Language.ToString());
 			cmd.Parameters.AddWithValue(@"File", document.File);

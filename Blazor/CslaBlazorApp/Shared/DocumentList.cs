@@ -14,7 +14,12 @@ using log4net;
 namespace CslaBlazorApp.Shared {
 	[Serializable]
 	public class DocumentList: BusinessListBase<DocumentList, Document> {
-		[Fetch]
+
+        public DocumentList(){
+			MarkAsChild();
+        }
+
+        [Fetch]
 		private void Fetch(int publicationId, [Inject] DataAccess.IDocumentDal dal, [Inject] IChildDataPortal<Document> documentPortal) {
 			using (LoadListMode) {
 				var data = dal.GetByPublication(publicationId).Select(d => documentPortal.FetchChild(d));

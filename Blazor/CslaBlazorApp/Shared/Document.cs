@@ -16,9 +16,9 @@ namespace CslaBlazorApp.Shared {
 	public class Document : BusinessBase<Document> {
 		private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-		//public Document() {
-		//	MarkAsChild();
-		//}
+		public Document() {
+			MarkAsChild();
+		}
 
 		#region	PropertyInfos
 		//Id 
