@@ -10,6 +10,7 @@ using Csla.Rules;
 using Csla;
 using DataAccess;
 using log4net;
+using Csla.Rules.CommonRules;
 
 namespace CslaBlazorApp.Shared {
 	[Serializable]
@@ -122,6 +123,10 @@ namespace CslaBlazorApp.Shared {
 
 			var props = this.FieldManager.GetRegisteredProperties();
 			// TODO: add business rules
+			BusinessRules.AddRule(new Required(LanguageProperty) { MessageDelegate = () => "Document.Error.Language.Required" });
+			BusinessRules.AddRule(new Required(DocumentTypeProperty) { MessageDelegate = () => "Document.Error.DocumentType.Required" });
+			BusinessRules.AddRule(new Required(FileProperty) { MessageDelegate = () => "Document.Error.File.Required" });
+
 		}
 
 		public class ValidateDocument : Csla.Rules.ObjectRule {
@@ -129,10 +134,16 @@ namespace CslaBlazorApp.Shared {
 				AffectedProperties.AddRange(fields);
 			}
 
-			protected override void Execute(IRuleContext context) {
-				base.Execute(context);
+			protected override void Execute(IRuleContext context) {				
 
 				// TODO: Define Rules here...
+				var mimeType = (string)ReadProperty(context.Target, MimeTypeProperty);
+				var extension = (string)ReadProperty(context.Target, ExtensionProperty);
+
+				if (!mimeType.ToLower().Equals("application/pdf") || !extension.ToLower().Equals("pdf")) { 
+					context.AddErrorResult(MimeTypeProperty, "Document.Error.FileType.NotSupported");
+				}
+
 			}
 		}
 
@@ -150,6 +161,7 @@ namespace CslaBlazorApp.Shared {
 		[Fetch]
 		private void Fetch(int publicationId, [Inject] DataAccess.IDocumentDal dal) {
 			var data = dal.GetByPublication(publicationId);
+			MarkAsChild();
 			using (BypassPropertyChecks) {
 				Csla.Data.DataMapper.Map(data, this); // source : data->DocumentDTO, target: this->Shared.Document				
 			}
@@ -172,6 +184,8 @@ namespace CslaBlazorApp.Shared {
 			DocumentType = (EnumDocumentType)data.DocumentType;
 			Language = (EnumLanguageCode)data.Language;
 			PublicationId = data.PublicationId;
+
+			MarkAsChild();
 			_log.Info("[PORTAL] FetchChild(Document)");
 		}
 
