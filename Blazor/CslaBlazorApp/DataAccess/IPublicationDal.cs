@@ -10,6 +10,7 @@ namespace DataAccess {
         PublicationDTO Insert(PublicationDTO publication);
         PublicationDTO Update(PublicationDTO publication);
         bool Delete(int id);
-		//object Delete(Func<object, int> value);
+        //object Delete(Func<object, int> value);
+        bool UpdateCover(int publicationId, byte[] cover);
 	}
 }

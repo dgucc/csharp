@@ -4,6 +4,10 @@
 @using Csla.Blazor
 @using CslaBlazorApp.Shared
 
+@using System.Net.Http.Headers
+@inject HttpClient Http
+@inject IJSRuntime JS
+
 @inject Csla.IDataPortal<Publication> publicationEditPortal
 @inject Csla.IDataPortal<DocumentList> documentsPortal
 @inject Csla.Blazor.ViewModel<Publication> vm
@@ -126,21 +130,23 @@
 				</tr>
 				<!-- PDFs-->
 				<tr>
-					<td>
-						<span># @vm.Model.Documents?.Count # @docvm.Model?.Count </span>
+					<td>						
 						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+						<span> #@docvm.Model?.Count =?= @vm.Model.Documents?.Count</span>
+						@*<br/><span> #@vm.Model.Documents?.Count (vm)</span>*@
 					</td>
 					<td>
-						<div class="flex-container">
+						<div class="flex-documents">
 						@if (docvm.Model == null) {
-							<p>Loading Documents...</p>
+							<p>No Documents...</p>
 						} else {
 							foreach (var item in docvm.Model){
-								<div class="flex-item">
+								<div class="flex-documents-item">
 									@if (item.Thumbnail != null) {
 									<figure>
 										<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(@item.Thumbnail)) height="150px" alt="PDF"/>
-										<figcaption>@item.DocumentType @item.Language</figcaption>
+												<figcaption>@Localize[@item.DocumentType.GetType().Name + "." + item.DocumentType.ToString()] - @Localize[@item.Language.GetType().Name + "." + item.Language.ToString()]</figcaption>
+												
 									</figure>
 									} else {
 										<span class="fa-stack fa-lg" style="opacity:0.5">
@@ -148,26 +154,66 @@
 											<i class="fa fa-ban fa-stack-2x text-danger"></i>
 										</span>
 									}
-								</div>
-							}
+								</div>								
+								} // foreach (var item in docvm.Model){
 						}
 						</div>
 					</td>
 					<td>
-						<button class="btn btn-outline-secondary" @onclick="OpenModal">
-							<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.Modal.btn.Show"]
-						</button>
+						<div style="margin:5px;">
+							<!-- Modal Dialog : UPLOAD PDF -->
+							<button class="btn btn-outline-secondary" @onclick="OpenUploadModal" disabled="@(vm.Model.IsNew)">
+								<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.Modal.btn.Show"]
+							</button>
 
-						<!-- Modal Dialog -->
-						<ModalDialog Title=@Localize["Publication.Edit.Upload.PDF.Title"] IsOpened="@isOpened">
-							<ModalBody>								
-								<h4>Placeholder to upload Files...</h4>
-								<p>Templated component in Blazor WebAssembly</p>
-							</ModalBody>
-							<ModalFooter>
-								<button class="btn btn-light " @onclick="() => isOpened = false">@Localize["Publication.Edit.Upload.Modal.btn.Close"]</button>
-							</ModalFooter>
-						</ModalDialog>
+							<ModalUpload Title=@Localize["Publication.Edit.Upload.PDF.Title"] IsOpened="@isUploadOpened">
+								<ModalBody>
+									<h4>Upload Documents (PDF)</h4>
+									<div class="form-control">									
+										<InputFile OnChange="OnInputFileChange" class="form-control" accept="pdf,PDF" @onclick="() => BrowserFile = null" />
+										<div style=" margin: 5px;">
+											@if (isLoading) {
+												<p>Uploading...</p>
+											} else {
+												@if (BrowserFile != null) {
+													<ul>
+														<li>Name : @BrowserFile.Name</li>
+														<li>Size (bytes) : @BrowserFile.Size</li>
+														<li>Content type : @BrowserFile.ContentType</li>
+														<li>Last modified : @BrowserFile.LastModified.ToString()</li>
+													</ul>
+												}
+											}
+										</div>
+										<InputSelect @bind-Value="@uploadInfo.documentType" class="form-select">
+											@foreach (var item in Enum.GetNames(typeof(EnumDocumentType))) {
+												<option value="@item">@item</option>
+											}
+										</InputSelect>
+
+										<InputSelect @bind-Value="@uploadInfo.lang" class="form-select">
+											@foreach (var item in Enum.GetNames(typeof(EnumLanguageCode))) {
+												<option value="@item">@item</option>
+											}
+										</InputSelect>
+									</div>
+									<div style=" margin: 15px;">
+										<button class="btn btn-block btn-success" @onclick="async () => await UploadFileAsync()">
+											<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.btn.Go"]
+										</button>
+										<br />
+										<span>
+											@if (!string.IsNullOrEmpty(UploadMessage)) {
+												@UploadMessage
+											}
+										</span>
+									</div>
+								</ModalBody>
+								<ModalFooter>
+									<button class="btn btn-light " @onclick="() => isUploadOpened = false">@Localize["Publication.Edit.Upload.Modal.btn.Close"]</button>
+								</ModalFooter>
+							</ModalUpload>
+						</div>
 					</td>
 				</tr>
 
@@ -231,6 +277,7 @@
 	protected override void OnInitialized() {
 		vm.Saved += () => NavigationManager.NavigateTo("/publications");
 		vm.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
+		docvm.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
 	}
 
 	protected override async Task OnParametersSetAsync() {
@@ -249,4 +296,60 @@
 	void OpenModal() {
 		isOpened = true;
 	}
+
+	// Modal Upload
+	bool isUploadOpened = false;
+	void OpenUploadModal() {
+		BrowserFile = null;
+		isUploadOpened = true;
+	}
+
+	private IBrowserFile BrowserFile = null;
+	private bool isLoading;
+	private string UploadMessage = "";
+
+	private void OnInputFileChange(InputFileChangeEventArgs e) {
+		UploadMessage = "";
+		BrowserFile = e.File;
+		Console.WriteLine(e.File);
+	}
+
+	private async Task UploadFileAsync() {
+		if (BrowserFile == null) return;
+
+		var fileContent = new StreamContent(BrowserFile.OpenReadStream(long.MaxValue));
+		fileContent.Headers.ContentType = new MediaTypeHeaderValue(BrowserFile.ContentType);
+
+		// Create the content
+		var content = new MultipartFormDataContent();
+
+		content.Add(
+			content: fileContent,
+			name: "\"pdf\"",
+			fileName: BrowserFile.Name
+		);
+
+		// Extra Parameters
+		content.Add(new StringContent(id.ToString()), name: "publicationId");
+		content.Add(new StringContent(uploadInfo.documentType), name: "documentType");
+		content.Add(new StringContent(uploadInfo.lang), name: "lang");
+
+
+		var request = await Http.PostAsync("api/PDF/upload", content);
+		string response = await request.Content.ReadAsStringAsync();
+		UploadMessage = request.StatusCode + " : " + response;
+
+		//docvm.Saved += () => NavigationManager.NavigateTo("/publications");
+		//docvm.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
+		//NavigationManager.NavigateTo("/publications/Edit/"+id);
+		await docvm.RefreshAsync(() => documentsPortal.FetchAsync(int.Parse(id)));
+	}
+
+	public UploadInfo uploadInfo = new UploadInfo();
+
+	public class UploadInfo{
+		public string documentType { get; set; } = EnumDocumentType.Report.ToString();
+		public string lang { get; set; } = EnumLanguageCode.French.ToString();
+	}
+	
 }

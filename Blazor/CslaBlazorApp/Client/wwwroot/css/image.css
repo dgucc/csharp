@@ -40,9 +40,10 @@ figcaption {
 
 .flex-documents {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
+    /*justify-content: space-evenly;*/
     align-items: flex-start;
-    gap: 1em;
+    gap: 2em;
     flex-wrap: wrap;
 }
 

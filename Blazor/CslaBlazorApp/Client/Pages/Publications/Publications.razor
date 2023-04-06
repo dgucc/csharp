@@ -1,11 +1,14 @@
 ﻿@page "/Publications"
 
 @using CslaBlazorApp.Shared
+@using System.Net.Http.Headers
+
+@inject HttpClient Http
+
 @inject Csla.IDataPortal<CslaBlazorApp.Shared.Publications> publicationListPortal
 @inject Csla.IDataPortal<Publication> publicationEditPortal
 @inject Csla.Blazor.ViewModel<CslaBlazorApp.Shared.Publications> vm
 @inject IStringLocalizer<SharedResources> Localize
-@inject IJSRuntime JSRuntime
 
 <h1>@Localize["Publications.Title"]</h1>
 
@@ -30,26 +33,70 @@
 		</thead>
 		<tbody>
 			@foreach (var item in vm.Model) {
-				<tr>
+				<tr style="max-height: 200px; overflow-y: scroll">
 					<td>@item.Id</td>
 					<td>
 						<div>
 							@if(item.Cover != null) {
 								<img class="cover rounded" src=@string.Concat("data:image/jpg;base64,", Convert.ToBase64String(item.Cover)) />
 							} else {
-								<span class="fa-stack fa-lg" style="opacity:0.5">
+								<div class="fa-stack fa-lg" style="opacity:0.5;display:block;margin-left:30px">
 									<i class="fa fa-camera fa-stack-1x"></i>
 									<i class="fa fa-ban fa-stack-2x text-danger"></i>
-								</span>
+								</div>
+							<!-- Modal Dialog : UPLOAD PDF -->
+							<button class="btn btn-outline-secondary" @onclick="OpenUploadModal">
+								<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.Modal.btn.Show"]
+							</button>
+
+							<ModalUpload Title="Add a Cover" IsOpened="@isUploadOpened">
+								<ModalBody>
+									<h4>Upload Cover (JPG,PNG)</h4>
+									<div class="form-control">
+										<InputFile OnChange="OnInputFileChange" class="form-control" accept="jpg,png" @onclick="() => BrowserFile = null" />
+										<div style=" margin: 5px;">
+													@if (isLoading) {
+												<p>Uploading...</p>
+													} else {
+														@if (BrowserFile != null) {
+													<ul>
+														<li>Name : @BrowserFile.Name</li>
+														<li>Size (bytes) : @BrowserFile.Size</li>
+														<li>Content type : @BrowserFile.ContentType</li>
+														<li>Last modified : @BrowserFile.LastModified.ToString()</li>
+													</ul>
+														}
+													}
+										</div>
+									</div>
+									<div style=" margin: 5px;">
+											<button class="btn btn-block btn-success" @onclick="async () => await UploadCover(item.Id)">
+											<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;@Localize["Publication.Edit.Upload.btn.Go"]
+										</button>
+										<br />
+										<span>
+													@if (!string.IsNullOrEmpty(UploadMessage)) {
+														@UploadMessage
+													}
+										</span>
+									</div>
+								</ModalBody>
+								<ModalFooter>
+									<button class="btn btn-light " @onclick="() => isUploadOpened = false">@Localize["Publication.Edit.Upload.Modal.btn.Close"]</button>
+								</ModalFooter>
+							</ModalUpload>
 							}
 						</div>
 					</td>
+					<!-- Approval Date -->
 					<td>@item.ApprovalDate.ToString("dd/MM/yyyy")</td>
+					<!-- Publish Date -->
 					<td>@(item.PublishDate.GetHashCode() == 0 ? "" : item.PublishDate.ToString("dd/MM/yyyy HH:mm"))</td>
-					<td>
+					<!-- Titles -->
+					<td style="overflow-y: auto;max-height: 160px;">
 						<div style="width:auto;max-width:200px;">
-							<span style="font-size:x-small;font-weight:bold;">FR</span> @item.TitleFr<br />
-							<span style="font-size:x-small;font-weight:bold;">NL</span> @item.TitleNl<br />
+							<span style="font-size:smaller;font-weight:bold;"><sup>FR</sup></span> @item.TitleFr<br />
+							<span style="font-size:smaller;font-weight:bold;"><sup>NL</sup></span> @item.TitleNl<br />
 							@*
 							<span style="font-size:x-small;font-weight:bold;">DE</span> @item.TitleDe<br />
 							<span style="font-size:x-small;font-weight:bold;">EN</span> @item.TitleEn
@@ -117,6 +164,48 @@
 	void OpenModal() {
 		isOpened = true;
 	}
+	
+	// Modal Upload
+	bool isUploadOpened = false;
+	void OpenUploadModal() {
+		BrowserFile = null;
+		isUploadOpened = true;
+	}
 
+	private IBrowserFile BrowserFile = null;
+	private bool isLoading;
+	private string UploadMessage = "";
 
+	private void OnInputFileChange(InputFileChangeEventArgs e) {
+		UploadMessage = "";
+		BrowserFile = e.File;
+		Console.WriteLine(e.File);
+	}
+
+	private async Task UploadCover(int publicationId) {
+		if (BrowserFile == null) return;
+
+		var fileContent = new StreamContent(BrowserFile.OpenReadStream(long.MaxValue));
+		fileContent.Headers.ContentType = new MediaTypeHeaderValue(BrowserFile.ContentType);
+
+		// Create the content
+		var content = new MultipartFormDataContent();
+
+		content.Add(
+			content: fileContent,
+			name: "\"image\"",
+			fileName: BrowserFile.Name
+		);
+
+		// Extra Parameters
+		content.Add(new StringContent(publicationId.ToString()), name: "publicationId");
+
+		var request = await Http.PostAsync("api/PDF/upload/cover", content);
+		string response = await request.Content.ReadAsStringAsync();
+		UploadMessage = request.StatusCode + " : " + response;
+
+		await vm.RefreshAsync(() => publicationListPortal.FetchAsync());
+		StateHasChanged();
+
+	}
 }
