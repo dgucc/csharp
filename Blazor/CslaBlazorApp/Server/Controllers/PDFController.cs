@@ -59,7 +59,7 @@ public class PDFController : ControllerBase {
 				Extension = extension.Remove(0,1).ToUpper(),
 				CreatedOn = DateTime.Now,
 				Description = null,
-				UploadedBy = @"CCREK\GucciardiD",
+				UploadedBy = @"Dgucc",
 				DocumentType = Enum.Parse<EnumDocumentType>(documentType),
 				Language = Enum.Parse<EnumLanguageCode>(lang),
 				File = pdfBytes,
@@ -68,6 +68,7 @@ public class PDFController : ControllerBase {
 			};
 
 			var dal = new DataAccess.Mock.DocumentDal(); // Temporarily........................
+			//var dal = new DataAccess.MSSQL.DocumentDal(); // Temporarily.....................
 			dal.Insert(document);
 
 		} catch (Exception ex) {
@@ -113,6 +114,8 @@ public class PDFController : ControllerBase {
 
 		try {
 			var dal = new DataAccess.Mock.PublicationDal(); // Temporarily........................
+			//var dal = new DataAccess.MSSQL.PublicationDal(); // Temporarily.....................
+
 			dal.UpdateCover(publicationId, imageBytes);
 
 		} catch (Exception ex) {
