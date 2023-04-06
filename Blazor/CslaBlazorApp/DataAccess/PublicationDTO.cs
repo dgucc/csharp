@@ -38,7 +38,7 @@ namespace DataAccess {
 
         //public List<EnumTopicType>? Topics { get; set; }
 
-        //public List<Document>? Documents { get; set; }
-      
+        public List<DocumentDTO>? Documents { get; set; }
+
     }   
 }
