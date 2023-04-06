@@ -59,7 +59,7 @@ namespace DataAccess.MSSQL {
 			dto.MimeType = (!reader.IsDBNull("MimeType")) ? reader.GetString("MimeType") : "";
 			dto.Extension = (!reader.IsDBNull("Extension")) ? reader.GetString("Extension") : "";
 			dto.Description = (!reader.IsDBNull("Description")) ? reader.GetString("Description") : "";
-			dto.UploadedBy = (!reader.IsDBNull("UploadedBy")) ? reader.GetString("UploadedBy") : "";
+			dto.UploadedBy = (!reader.IsDBNull("UploadedByUser")) ? reader.GetString("UploadedBy") : "";
 			dto.DocumentType = Enum.Parse<EnumDocumentType>(reader.GetString("DocumentType"));
 			dto.Language = Enum.Parse<EnumLanguageCode>(reader.GetString("language"));
 			dto.PublicationId = reader.GetInt32("PublicationId");
@@ -90,7 +90,7 @@ namespace DataAccess.MSSQL {
 				dto.MimeType = (!reader.IsDBNull("MimeType")) ? reader.GetString("MimeType") : "";
 				dto.Extension = (!reader.IsDBNull("Extension")) ? reader.GetString("Extension") : "";
 				dto.Description = (!reader.IsDBNull("Description")) ? reader.GetString("Description") : "";
-				dto.UploadedBy = (!reader.IsDBNull("UploadedBy")) ? reader.GetString("UploadedBy") : "";
+				dto.UploadedBy = (!reader.IsDBNull("UploadedByUser")) ? reader.GetString("UploadedBy") : "";
 				dto.DocumentType = Enum.Parse<EnumDocumentType>(reader.GetString("DocumentType"));
 				dto.Language = Enum.Parse<EnumLanguageCode>(reader.GetString("language"));
 				dto.PublicationId = reader.GetInt32("PublicationId");
@@ -157,7 +157,7 @@ namespace DataAccess.MSSQL {
 			cmd.Parameters.AddWithValue(@"Extension", document.Extension);
 			cmd.Parameters.AddWithValue(@"CreatedOn", document.CreatedOn);
 			cmd.Parameters.AddWithValue(@"Description", document.Description);
-			cmd.Parameters.AddWithValue(@"UploadedBy", document.UploadedBy);
+			cmd.Parameters.AddWithValue(@"UploadedByUser", document.UploadedBy);
 			cmd.Parameters.AddWithValue(@"DocumentType", document.DocumentType.ToString());
 			cmd.Parameters.AddWithValue(@"Language", document.Language.ToString());
 			cmd.Parameters.AddWithValue(@"File", document.File);
