@@ -231,16 +231,43 @@
   <data name="Publications.Edit.Delete.Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="Enums.Language.Code.Dutch" xml:space="preserve">
+  <data name="EnumLanguageCode.Dutch" xml:space="preserve">
     <value>NL</value>
   </data>
-  <data name="Enums.Language.Code.English" xml:space="preserve">
+  <data name="EnumLanguageCode.English" xml:space="preserve">
     <value>EN</value>
   </data>
-  <data name="Enums.Language.Code.French" xml:space="preserve">
+  <data name="EnumLanguageCode.French" xml:space="preserve">
     <value>FR</value>
   </data>
-  <data name="Enums.Language.Code.German" xml:space="preserve">
+  <data name="EnumLanguageCode.German" xml:space="preserve">
     <value>DE</value>
+  </data>
+  <data name="EnumDocumentType.Abstract" xml:space="preserve">
+    <value>Abstract</value>
+  </data>
+  <data name="EnumDocumentType.Attachment" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
+  <data name="EnumDocumentType.ConclusionsAndRecommendations" xml:space="preserve">
+    <value>Conclusions and Recommandations</value>
+  </data>
+  <data name="EnumDocumentType.CoverPhoto" xml:space="preserve">
+    <value>Cover</value>
+  </data>
+  <data name="EnumDocumentType.Misc" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="EnumDocumentType.PressRelease" xml:space="preserve">
+    <value>Press Release</value>
+  </data>
+  <data name="EnumDocumentType.Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="EnumDocumentType.Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Publication.Edit.Upload.btn.Go" xml:space="preserve">
+    <value>Upload</value>
   </data>
 </root>

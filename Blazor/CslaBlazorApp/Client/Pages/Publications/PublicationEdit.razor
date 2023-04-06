@@ -100,34 +100,34 @@
 				<tr>
 					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleFr).FriendlyName)]</td>
 					<td>
-						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleFr))" />
+						<TextAreaInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleFr))" ></TextAreaInput>
 					</td>
 				</tr>
 				<!-- TitleNl-->
 				<tr>
 					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleNl).FriendlyName)]</td>
 					<td>
-						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleNl))" />
+						<TextAreaInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleNl))" />
 					</td>
 				</tr>
 				<!-- TitleDe-->
 				<tr>
 					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleDe).FriendlyName)]</td>
 					<td>
-						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleDe))" />
+						<TextAreaInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleDe))" />
 					</td>
 				</tr>
 				<!-- TitleEn-->
 				<tr>
 					<td>@Localize["Publication.Edit."+(vm.GetPropertyInfo(() => vm.Model.TitleEn).FriendlyName)]</td>
 					<td>
-						<TextInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleEn))" />
+						<TextAreaInput Property="@(vm.GetPropertyInfo(() => vm.Model.TitleEn))" />
 					</td>
 				</tr>
 				<!-- PDFs-->
 				<tr>
 					<td>
-						<span># @docvm.Model?.Count </span>
+						<span># @vm.Model.Documents?.Count # @docvm.Model?.Count </span>
 						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 					</td>
 					<td>

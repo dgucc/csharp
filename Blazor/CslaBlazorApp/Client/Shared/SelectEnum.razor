@@ -21,7 +21,7 @@
 	public Type EnumType { get; set; }
 
 	private string TextValue {
-		get => (string)Property.Value;
+		get => Property.Value.ToString();
 		set => Property.Value = value;
 	}
 }
