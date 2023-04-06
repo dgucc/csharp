@@ -106,7 +106,7 @@ namespace DataAccess.Mock {
                 //HeaderDe = "Header [DE]",
                 //HeaderEn = "Header [EN]"
                 //Topics = new List<EnumTopicType>{ EnumTopicType.Finances, EnumTopicType.Budget}
-                Cover = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
+                //Cover = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, @"../TEMP/cover.jpg"))
             }
 		};
 		#endregion

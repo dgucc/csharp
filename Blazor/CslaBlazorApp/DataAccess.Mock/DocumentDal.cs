@@ -15,6 +15,11 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=1,
             PublicationId=1,
+            MimeType="application/pdf",
+            Extension="PDF",
+            CreatedOn=DateTime.Now,
+            Description="Test",
+            UploadedBy="Dgucc",
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.French,
             File=File.ReadAllBytes(@"../TEMP/Publication_01_FR.pdf"),
@@ -23,7 +28,12 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=2,
             PublicationId=1,
-            DocumentType=EnumDocumentType.Report,
+            MimeType="application/pdf",
+			Extension="PDF",
+			CreatedOn=DateTime.Now,
+			Description="Test",
+			UploadedBy="Dgucc",
+			DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
 			File=File.ReadAllBytes(@"../TEMP/Publication_01_NL.pdf"),
 			Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory,  @"../TEMP/cover/Publication_01_NL_cover.jpg"))
@@ -31,7 +41,12 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=3,
             PublicationId=2,
-            DocumentType=EnumDocumentType.Report,
+            MimeType="application/pdf",
+			Extension="PDF",
+			CreatedOn=DateTime.Now,
+			Description="Test",
+			UploadedBy="Dgucc",
+			DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.French,
 			File=File.ReadAllBytes(@"../TEMP/Publication_02_FR.pdf"),
 			Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory,  @"../TEMP/cover/Publication_02_FR_cover.jpg"))
@@ -39,7 +54,12 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=7,
             PublicationId=2,
-            DocumentType=EnumDocumentType.Report,
+			MimeType="application/pdf",
+			Extension="PDF",
+			CreatedOn=DateTime.Now,
+			Description="Test",
+			UploadedBy="Dgucc",
+			DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
 			File=File.ReadAllBytes(@"../TEMP/Publication_02_NL.pdf"),
 			Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory,  @"../TEMP/cover/Publication_02_NL_cover.jpg"))
@@ -47,7 +67,12 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=8,
             PublicationId=3,
-            DocumentType=EnumDocumentType.Report,
+			MimeType="application/pdf",
+			Extension="PDF",
+			CreatedOn=DateTime.Now,
+			Description="Test",
+			UploadedBy="Dgucc",
+			DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
 			File=File.ReadAllBytes(@"../TEMP/Publication_03_NL.pdf"),
 			Thumbnail=File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory,  @"../TEMP/cover/Publication_03_NL_cover.jpg"))
@@ -55,6 +80,11 @@ public class DocumentDal : IDocumentDal {
         new DocumentDTO {
             Id=9,
             PublicationId=4,
+			MimeType="application/pdf",
+			Extension="PDF",
+			CreatedOn=DateTime.Now,
+			Description="Test",
+			UploadedBy="Dgucc",
             DocumentType=EnumDocumentType.Report,
             Language=EnumLanguageCode.Dutch,
 			File=File.ReadAllBytes(@"../TEMP/Publication_04_NL.pdf"),
@@ -78,22 +108,34 @@ public class DocumentDal : IDocumentDal {
     }
     
     public List<DocumentDTO> Get(){
-        return _documentTable.Where(r => true).ToList();
+		return _documentTable.Where(r => true).ToList();
     }
 
-    public List<DocumentDTO> GetByPublication(int documentId){
-        return new List<DocumentDTO>();
+    public List<DocumentDTO> GetByPublication(int publicationId){
+        return _documentTable.Where(p => p.PublicationId == publicationId).ToList();
+	}
+
+    public DocumentDTO Insert(DocumentDTO document) {
+        if (Exists(document.Id))
+            throw new InvalidOperationException($"Key exists {document.Id}");
+        lock (_documentTable) {
+            int lastId = _documentTable.Max(m => m.Id);
+            document.Id = ++lastId;
+            _documentTable.Add(document);
+        }
+        return document;
     }
 
-    public DocumentDTO Insert(DocumentDTO document){
-        return new DocumentDTO();
-    }
-    
-    public DocumentDTO Update(DocumentDTO document){
+	public DocumentDTO Update(DocumentDTO document){
         Console.WriteLine("[DAL] Update()");
         lock (_documentTable) {
             var old = Get(document.Id);
             old.PublicationId = document.PublicationId;
+            old.MimeType = document.MimeType;
+            old.Extension = document.Extension;
+            old.CreatedOn = document.CreatedOn;
+            old.Description = document.Description;
+            old.UploadedBy = document.UploadedBy;
             old.DocumentType = document.DocumentType;
             old.Language = document.Language;
             old.File = document.File;
@@ -101,7 +143,7 @@ public class DocumentDal : IDocumentDal {
             return old;
         }
     }
-    
+
     public bool Delete(int id){
         Console.WriteLine("[DAL] Delete(Document id:{0})", id);
 		var document = _documentTable.Where(p => p.Id == id).FirstOrDefault();
