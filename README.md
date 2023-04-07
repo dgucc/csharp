@@ -91,3 +91,29 @@ Create a omnisharp.json file in the root of your project or in `%userprofile%\.o
 ### Hide References count in Editor 
 
 <Ctrl+Shif+P> Open User Settings : uncheck "Controls whether the editor Show CodeLens"  
+
+### Add "Open with Visual Studio Code" in Contextual Menu
+vsCodeOpenFolder.reg :   
+```
+Windows Registry Editor Version 5.00
+; Open files
+[HKEY_CLASSES_ROOT\*\shell\Open with VS Code]
+@="Edit with VS Code"
+"Icon"="C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe,0"
+[HKEY_CLASSES_ROOT\*\shell\Open with VS Code\command]
+@="\"C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" \"%1\""
+; This will make it appear when you right click ON a folder
+; The "Icon" line can be removed if you don't want the icon to appear
+[HKEY_CLASSES_ROOT\Directory\shell\vscode]
+@="Open Folder as VS Code Project"
+"Icon"="\"C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\",0"
+[HKEY_CLASSES_ROOT\Directory\shell\vscode\command]
+@="\"C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" \"%1\""
+; This will make it appear when you right click INSIDE a folder
+; The "Icon" line can be removed if you don't want the icon to appear
+[HKEY_CLASSES_ROOT\Directory\Background\shell\vscode]
+@="Open Folder as VS Code Project"
+"Icon"="\"C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\",0"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\vscode\command]
+@="\"C:\\Users\\dgucc\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" \"%V\""
+```
