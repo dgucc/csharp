@@ -195,7 +195,7 @@ public class Publication : BusinessBase<Publication>{
 	}
 
 	[FetchChild]
-	private void Fetch(DataAccess.PublicationDTO data) {
+	private void Fetch(DataAccess.PublicationDTO data, [Inject] DataAccess.IDocumentDal dal) {
 		Id = data.Id;
 		ApprovalDate = (DateTime)data.ApprovalDate;
 		PublishDate = (DateTime)data.PublishDate;
@@ -205,6 +205,29 @@ public class Publication : BusinessBase<Publication>{
 		TitleDe = data.TitleDe;
 		TitleEn = data.TitleEn;
 		Cover = data.Cover;
+		
+		// Documents....
+		var docs = dal.GetByPublication(Id);
+		DocumentList list = new();
+		foreach (var dto in docs) {
+			if (dto.PublicationId == Id) {
+				var doc = Documents.AddNew();
+				doc.Id = dto.Id;
+				doc.Filename = dto.Filename;
+				doc.MimeType = dto.MimeType;
+				doc.Extension = dto.Extension;
+				doc.File = dto.File;
+				doc.Thumbnail = dto.Thumbnail;
+				doc.DocumentType = (EnumDocumentType)dto.DocumentType;
+				doc.Language = (EnumLanguageCode)dto.Language;
+				doc.PublicationId = dto.PublicationId;
+				list.Add(doc);
+			}
+		}
+		LoadProperty(DocumentsProperty, list);
+		_log.Info("[PORTAL] FetchChild(Publication)->Documents.Count : " + Documents.Count);
+
+		
 		_log.Info("[PORTAL] FetchChild(Publication)");
 	}
 

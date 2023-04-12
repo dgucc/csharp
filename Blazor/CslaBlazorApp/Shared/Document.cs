@@ -27,7 +27,7 @@ namespace CslaBlazorApp.Shared {
 		[Required]
 		public int Id {
 			get => GetProperty(IdProperty);
-			private set => SetProperty(IdProperty, value);
+			set => SetProperty(IdProperty, value);
 		}
 
 		// Filename
