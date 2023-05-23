@@ -1,3 +1,4 @@
+![Avatar](https://github.com/dgucc/sandbox/blob/main/tips/images/avatar.gif)  
 
 git clone with GitHub CLI  
 
