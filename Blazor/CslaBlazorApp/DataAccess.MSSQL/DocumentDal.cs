@@ -6,16 +6,24 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess;
 using log4net;
+using Microsoft.Extensions.Configuration;
 
-namespace DataAccess.MSSQL {
-	public class DocumentDal : IDocumentDal {
-		const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Csla;Integrated Security=True";
+namespace DataAccess.MSSQL
+{
+    public class DocumentDal : IDocumentDal {
+		private string connectionString = null;
 		private SqlConnection conn = null;
 		private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
 		public DocumentDal() {
-			conn = new SqlConnection(connectionString);
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+            connectionString = configuration.GetConnectionString("CslaDb");
+            conn = new SqlConnection(connectionString);
 		}
 		public bool Delete(int id) {
 			conn.Open();

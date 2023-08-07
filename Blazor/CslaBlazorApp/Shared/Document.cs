@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using Csla.Core;
 using Csla.Rules;
 using Csla;
-using DataAccess;
 using log4net;
 using Csla.Rules.CommonRules;
+using DataAccess;
 
-namespace CslaBlazorApp.Shared {
-	[Serializable]
+namespace CslaBlazorApp.Shared
+{
+    [Serializable]
 	public class Document : BusinessBase<Document> {
 		private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -171,7 +172,7 @@ namespace CslaBlazorApp.Shared {
 		}
 
 		[FetchChild]
-		private void Fetch(DataAccess.DocumentDTO data) {
+		private void Fetch(DocumentDTO data) {
 			Id = data.Id;
 			Filename = data.Filename;
 			MimeType = data.MimeType;

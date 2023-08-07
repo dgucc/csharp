@@ -342,6 +342,7 @@
 		//docvm.Saved += () => NavigationManager.NavigateTo("/publications");
 		//docvm.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
 		//NavigationManager.NavigateTo("/publications/Edit/"+id);
+		await vm.RefreshAsync(() => publicationEditPortal.FetchAsync(int.Parse(id)));
 		await docvm.RefreshAsync(() => documentsPortal.FetchAsync(int.Parse(id)));
 	}
 

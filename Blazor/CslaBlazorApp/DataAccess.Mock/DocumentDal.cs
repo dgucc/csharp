@@ -7,8 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using System.Xml;
+using System.Xml.Serialization;
+using DataAccess;   
+
 namespace DataAccess.Mock;
-    
+
 public class DocumentDal : IDocumentDal {
 
     private static readonly List<DocumentDTO> _documentTable = new List<DocumentDTO>{
@@ -112,7 +116,9 @@ public class DocumentDal : IDocumentDal {
     }
 
     public List<DocumentDTO> GetByPublication(int publicationId){
-        return _documentTable.Where(p => p.PublicationId == publicationId).ToList();
+        var documents = _documentTable.Where(p => p.PublicationId == publicationId).ToList();
+        Console.WriteLine(XmlUtils.SerializeObject(documents));
+		return _documentTable.Where(p => p.PublicationId == publicationId).ToList();
 	}
 
     public DocumentDTO Insert(DocumentDTO document) {
@@ -157,4 +163,22 @@ public class DocumentDal : IDocumentDal {
         }            
     }
 
+}
+
+public static class XmlUtils {
+	public static string SerializeObject<T>(this T objToSerialize) {
+		XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+		ns.Add("", "");
+		MemoryStream ms = new MemoryStream();
+
+		XmlWriterSettings settings = new XmlWriterSettings();
+		settings.OmitXmlDeclaration = true;
+		settings.Encoding = new UnicodeEncoding(bigEndian: false, byteOrderMark: false);
+		XmlWriter writer = XmlWriter.Create(ms, settings);
+
+		XmlSerializer serializer = new XmlSerializer(objToSerialize.GetType());
+		serializer.Serialize(writer, objToSerialize, ns);
+
+		return Encoding.Unicode.GetString(ms.ToArray());
+	}
 }

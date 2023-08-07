@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Linq;
-using System.Xml.Schema;
 using Csla;
 using Csla.Core;
 using Csla.Rules;
 using Csla.Rules.CommonRules;
 using log4net;
-using log4net.Config;
-
 using DataAccess;
 
 namespace CslaBlazorApp.Shared;
@@ -195,7 +184,7 @@ public class Publication : BusinessBase<Publication>{
 	}
 
 	[FetchChild]
-	private void Fetch(DataAccess.PublicationDTO data, [Inject] DataAccess.IDocumentDal dal) {
+	private void Fetch(PublicationDTO data, [Inject] DataAccess.IDocumentDal dal) {
 		Id = data.Id;
 		ApprovalDate = (DateTime)data.ApprovalDate;
 		PublishDate = (DateTime)data.PublishDate;

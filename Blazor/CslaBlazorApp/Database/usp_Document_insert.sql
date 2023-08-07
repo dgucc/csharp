@@ -49,7 +49,7 @@ INSERT
         @Extension,
         (SELECT CURRENT_TIMESTAMP), --@CreatedOn,
         @Description,
-        (SELECT SUSER_NAME()), --@UploadedByUser,		
+        @UploadedByUser, --(SELECT SUSER_NAME()),
         @File,
         @Thumbnail,
         @DocumentType,

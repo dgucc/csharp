@@ -6,8 +6,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using DataAccess;
 
-namespace DataAccess.Mock {
+namespace DataAccess.Mock
+{
     public class PublicationDal : IPublicationDal {
         #region Test Data
         private static readonly List<PublicationDTO> _publicationTable = new List<PublicationDTO> {

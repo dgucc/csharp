@@ -150,7 +150,41 @@ Test with Swagger GUI : https://localhost:7001/swagger/index.html
 API :  https://localhost:7001/api/Document/pdf/upload
 `$ curl -k --location --request POST 'https://localhost:7001/api/Document/pdf/upload' --form 'pdf=@"Publication_04_NL.pdf"' --output acknowledged.pdf`  
 `
+## ConnectionStrings appsettings.json
 
+[CCREK.Internet.Thot.Server.csproj]
+appsettings.json :  
+```json
+{
+    ...,
+    "ConnectionStrings": {
+        "WebsiteDG": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebsiteDG;Integrated Security=True",
+        "ApplicationsDG": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Applications;Integrated Security=True"
+    }
+}
+
+```
+  
+[CCREK.Internet.Thot.MSSQL.csproj]
+> Include="Microsoft.Extensions.Conf  iguration" Version="7.0.0" />    
+> Include="Microsoft.Extensions.Config  uration.FileExtensions" Version  ="7.0.0" />  
+> Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />    
+> Include="System.Configuration.ConfigurationManager" Version="7.0.0" />  
+
+
+PublicatieDal.cs :  
+```csharp
+using Microsoft.Extensions.Configuration;
+...
+public PublicatieDal(){
+    var configuration = new ConfigurationBuilder()
+        .SetBasePath(AppContext.BaseDirectory)
+		.AddJsonFile("appsettings.json", optional:false)
+        .Build();
+	connectionString = configuration.GetConnectionString("CslaDb");
+    conn = new SqlConnection(connectionString);
+}
+```
 
 ---
 ## Tips

@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Csla;
-using Csla.Core;
-using Csla.Rules;
-using DataAccess;
-using log4net;
+﻿using Csla;
 
 namespace CslaBlazorApp.Shared {
 	[Serializable]
