@@ -42,6 +42,9 @@ Install .NET SDK
 
 [Setup, Build and Run Blazor WASM App on Linux](https://www.prowaretech.com/articles/current/information-technology/linux/setup-and-configure/build-and-run-blazor-wasm-apps)
 
+Create the Blazor WebAssembly Client and Server Projects  
+`$dotnet new blazorwasm -o BlazorWasmApp -ho`  
+
 Restore Dependencies  
 `$ dotnet restore`   
 Build (in same folder as "sln")  
