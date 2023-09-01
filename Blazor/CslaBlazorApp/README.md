@@ -1,5 +1,7 @@
 # CSLA.NET Blazor Training
 
+`$ dotnet new blazorwasm -o CslaBlazorApp -h
+
 ## To Execute in vscode (in Terminal)
 `$ dotnet build`  
 `$ dotnet run --project Server`  
