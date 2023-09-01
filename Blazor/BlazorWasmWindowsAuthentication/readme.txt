@@ -51,7 +51,7 @@ app.UseAuthentication();
 @inject HttpClient Http
 ...
 @code{
-	private string? username;
+    private string? username;
 
     protected override async Task OnInitializedAsync() {
         username = await Http.GetStringAsync("user");
