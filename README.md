@@ -40,6 +40,14 @@ Install .NET SDK
 `$ sudo apt-get install dotnet-sdk-5.0`  
 `$ dotnet --list-sdks`  
 
+Uninstall .NET 
+`$ sudo apt-get purge dotnet-sdk-*`  
+`$ sudo apt-get purge dotnet-runtime-*`  
+or  
+`$ sudo apt remove --purge dotnet-sdk-6.0`  
+`$ sudo apt remove --purge dotnet-runtime-6.0`  
+
+
 [Setup, Build and Run Blazor WASM App on Linux](https://www.prowaretech.com/articles/current/information-technology/linux/setup-and-configure/build-and-run-blazor-wasm-apps)
 
 Create the Blazor WebAssembly Client and Server Projects  
